@@ -1,0 +1,9 @@
+Deployment Sample:
+
+	Przyk³adowy sposób stowrzenia instalki dla stworzonego Language Service mo¿na znaleŸæ na http://msdn.microsoft.com/en-us/library/bb164704(VS.80).aspx
+	
+	Przyk³adowo mo¿na zbudowaæ tak¹ instalkê dla IronPythona uruchamiaj¹c <Visual Studio SDK installation path>\VisualStudioIntegration\Samples\IronPythonIntegration\Setup\buildSetup.bat. Nale¿y mieæ wczeœniej skompilowany projekt w trypie Release.
+
+
+
+
