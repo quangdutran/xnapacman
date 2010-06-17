@@ -1,0 +1,12 @@
+D:\Uczelnia\Semestr 8\proj_programistyczny\git-brim\src\brim\bin\Debug\brim.dll
+D:\Uczelnia\Semestr 8\proj_programistyczny\git-brim\src\brim\bin\Debug\brim.pdb
+D:\Uczelnia\Semestr 8\proj_programistyczny\git-brim\src\brim\obj\Debug\ResolveAssemblyReference.cache
+D:\Uczelnia\Semestr 8\proj_programistyczny\git-brim\src\brim\obj\Debug\noname.brim.Resources.resources
+D:\Uczelnia\Semestr 8\proj_programistyczny\git-brim\src\brim\obj\Debug\noname.brim.VSPackage.resources
+D:\Uczelnia\Semestr 8\proj_programistyczny\git-brim\src\brim\obj\Debug\brim.csproj.GenerateResource.Cache
+D:\Uczelnia\Semestr 8\proj_programistyczny\git-brim\src\brim\obj\Debug\brim.cto
+D:\Uczelnia\Semestr 8\proj_programistyczny\git-brim\src\brim\obj\Debug\brim.ctsym
+D:\Uczelnia\Semestr 8\proj_programistyczny\git-brim\src\brim\obj\Debug\brim.dll
+D:\Uczelnia\Semestr 8\proj_programistyczny\git-brim\src\brim\obj\Debug\brim.pdb
+D:\Uczelnia\Semestr 8\proj_programistyczny\git-brim\src\brim\obj\Debug\lexer.cs
+D:\Uczelnia\Semestr 8\proj_programistyczny\git-brim\src\brim\obj\Debug\parser.cs
