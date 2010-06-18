@@ -1,6 +1,0 @@
-D:\Programming\Code\Projects\Games\Pacman\Pacman\Pacman\bin\x86\Debug\Pacman.exe
-D:\Programming\Code\Projects\Games\Pacman\Pacman\Pacman\bin\x86\Debug\Pacman.pdb
-D:\Programming\Code\Projects\Games\Pacman\Pacman\Pacman\obj\x86\Debug\ResolveAssemblyReference.cache
-D:\Programming\Code\Projects\Games\Pacman\Pacman\Pacman\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
-D:\Programming\Code\Projects\Games\Pacman\Pacman\Pacman\obj\x86\Debug\Pacman.exe
-D:\Programming\Code\Projects\Games\Pacman\Pacman\Pacman\obj\x86\Debug\Pacman.pdb

@@ -25,10 +25,13 @@ namespace Pacman
         {
             graphics = new GraphicsDeviceManager(this);
 
+
+            //TODO: dodaæ prze³¹czanie siê pomiêdzy trybami window i full screen
+            /*
             graphics.PreferredBackBufferWidth = 1280;
             graphics.PreferredBackBufferHeight = 1024;
             graphics.IsFullScreen = true;
-
+            */
             Content.RootDirectory = "Content";
 
             
