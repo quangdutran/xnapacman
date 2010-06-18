@@ -28,12 +28,20 @@ namespace GameStateManagement
         #region Fields
 
         ContentManager content;
+
+        public ContentManager Content
+        {
+            get { return content; }
+            set { content = value; }
+        }
         SpriteFont gameFont;
 
         Vector2 playerPosition = new Vector2(100, 100);
         Vector2 enemyPosition = new Vector2(100, 100);
 
         Random random = new Random();
+
+        static GameplayScreen instance = null;
 
         #endregion
 
@@ -46,10 +54,17 @@ namespace GameStateManagement
         #region Initialization
 
 
+        public static GameplayScreen GetInstance()
+        {
+            if (instance == null)
+                instance = new GameplayScreen();
+            return instance;
+        }
+
         /// <summary>
         /// Constructor.
         /// </summary>
-        public GameplayScreen()
+        private GameplayScreen()
         {
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
