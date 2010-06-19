@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using GameStateManagement;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace Pacman.GameObjects
 {
@@ -20,7 +21,7 @@ namespace Pacman.GameObjects
         }
 
         MonsterGameObjectColor monsterColor;
-        Rectangle source;
+        
 
         public MonsterGameObject(MonsterGameObjectColor color)
         {
@@ -30,29 +31,27 @@ namespace Pacman.GameObjects
 
         public override void LoadContent()
         {
-            base.LoadContent(); //loading sprite
-
-            switch (monsterColor)
+             switch (monsterColor)
             { 
                 case MonsterGameObjectColor.Blue:
                     this.source = new Rectangle(0, 0, OBJECT_SIZE, OBJECT_SIZE);
                 break;
 
                 case MonsterGameObjectColor.Green:
-                    this.source = new Rectangle(5, 0, OBJECT_SIZE, OBJECT_SIZE);
+                    this.source = new Rectangle(5*OBJECT_SIZE, 0, OBJECT_SIZE, OBJECT_SIZE);
                 break;
 
                 case MonsterGameObjectColor.Pink:
-                    this.source = new Rectangle(10, 0, OBJECT_SIZE, OBJECT_SIZE);    
+                    this.source = new Rectangle(10*OBJECT_SIZE, 0, OBJECT_SIZE, OBJECT_SIZE);    
                 break;
 
                 case MonsterGameObjectColor.Red:
-                    this.source = new Rectangle(15, 0, OBJECT_SIZE, OBJECT_SIZE);
+                    this.source = new Rectangle(15*OBJECT_SIZE, 0, OBJECT_SIZE, OBJECT_SIZE);
                 break;
 
             }
             //TODO: move to another place
-            screenPosition = new Vector2(0.0f + random.Next(5) * 10, 0.0f + random.Next(5) * 10);
+            screenPosition = new Vector2(0.0f + random.Next(5) * 100, 0.0f + random.Next(5) * 100);
 
        }
 
@@ -62,29 +61,21 @@ namespace Pacman.GameObjects
             throw new NotImplementedException();
         }
 
-        public override void HandleInput(InputState input)
+        public override void HandleInput(KeyboardState keyboardState)
         {
             throw new NotImplementedException();
         }
 
         public override void Draw(GameTime gameTime)
         {
-            SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
-
-            spriteBatch.Begin();
-
+            
             Color color = new Color(255, 255, 255, 255);
-
 
             Rectangle monsterRectangle = new Rectangle((int)screenPosition.X, (int)screenPosition.Y, SCALE*OBJECT_SIZE, SCALE*OBJECT_SIZE);
 
-            spriteBatch.Draw(sprite, monsterRectangle, source, color);
+            GameObject.SpriteBatch.Draw(sprite, monsterRectangle, source, color);
 
-            spriteBatch.End();
-
-            // If the game is transitioning on or off, fade it out to black.
-            if (TransitionPosition > 0)
-                ScreenManager.FadeBackBufferToBlack(255 - TransitionAlpha);
+            
         }
     }
 }

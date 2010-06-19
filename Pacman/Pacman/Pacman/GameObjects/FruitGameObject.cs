@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Input;
 
 namespace Pacman.GameObjects
 {
@@ -12,12 +13,12 @@ namespace Pacman.GameObjects
             throw new NotImplementedException();
         }
 
-        public override void HandleInput(GameStateManagement.InputState input)
+        public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
         {
             throw new NotImplementedException();
         }
 
-        public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
+        public override void LoadContent()
         {
             throw new NotImplementedException();
         }

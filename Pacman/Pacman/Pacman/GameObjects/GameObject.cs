@@ -7,10 +7,11 @@ using Pacman.GameManager;
 using GameStateManagement;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Input;
 
 namespace Pacman.GameObjects
 {
-    abstract class GameObject :GameScreen
+    abstract class GameObject
     {
         #region Fields
 
@@ -21,28 +22,54 @@ namespace Pacman.GameObjects
 
         protected GameCoordinates gamePosition;
         protected Vector2 screenPosition;
+        protected Rectangle source;
         
-        protected Texture2D sprite;
-        ContentManager content;
-
+        //Static fields
+        protected static Texture2D sprite;
+        
         //TODO: to delete
         protected static Random random = new Random();
 
         #endregion
 
+
+        #region Properties
+
+        //TODO: change namespaces.... Pacman.GameObjects should be inside Pacman.GameManager
+        private static ContentManager content;
+
+        /*internal*/ public static ContentManager Content
+        {
+            get { return GameObject.content; }
+            /*internal*/ set { GameObject.content = value; }
+        }
+
+        static SpriteBatch spriteBatch;
+
+        /*internal*/ public static SpriteBatch SpriteBatch
+        {
+            get { return GameObject.spriteBatch; }
+            /*internal*/ set { GameObject.spriteBatch = value; }
+        }
+
+        #endregion
+
+
         #region Initialization
 
-        public override void LoadContent()
+        public static void LoadStaticContent()
         {
             //TODO: check if here is use proper content
 
-            if (content == null)
-                content = new ContentManager(ScreenManager.Game.Services, "Content");
+        //    if (content == null)
+        //        content = new ContentManager(ScreenManager.Game.Services, "Content");
 
             sprite = content.Load<Texture2D>("sprite");
         }
 
-        public override void UnloadContent()
+        public abstract void LoadContent();
+
+        public virtual void UnloadContent()
         {
         //TODO: add unloading sprite
 
@@ -52,12 +79,14 @@ namespace Pacman.GameObjects
 
         #region Update and Draw
 
-        public abstract override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen);
-        public abstract override void HandleInput(InputState input);
-        public abstract override void Draw(GameTime gameTime);
+        public abstract void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen);
+        public virtual void HandleInput(KeyboardState keyboardState) { }
+        public abstract void Draw(GameTime gameTime);
 
         #endregion
 
-        
+
+
+
     }
 }

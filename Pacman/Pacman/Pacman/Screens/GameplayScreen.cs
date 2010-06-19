@@ -14,6 +14,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Pacman.GameObjects;
 #endregion
 
 namespace GameStateManagement
@@ -41,6 +42,9 @@ namespace GameStateManagement
 
         Random random = new Random();
 
+        GameObjectManager gameObjectManager;
+
+        //TODO: check is it nececcary
         static GameplayScreen instance = null;
 
         #endregion
@@ -68,6 +72,8 @@ namespace GameStateManagement
         {
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
+
+            gameObjectManager = new GameObjectManager();
         }
 
 
@@ -78,6 +84,12 @@ namespace GameStateManagement
         {
             if (content == null)
                 content = new ContentManager(ScreenManager.Game.Services, "Content");
+
+            gameObjectManager.ContentManager = content;
+            gameObjectManager.SpriteBatch = ScreenManager.SpriteBatch;
+
+            gameObjectManager.LoadContent();
+
 
             gameFont = content.Load<SpriteFont>("gamefont");
 
@@ -101,7 +113,14 @@ namespace GameStateManagement
         /// </summary>
         public override void UnloadContent()
         {
+            gameObjectManager.UnloadContent();
+
+            gameObjectManager.ContentManager = null;
+            gameObjectManager.SpriteBatch = null;
+
             content.Unload();
+
+
         }
 
 
@@ -203,7 +222,11 @@ namespace GameStateManagement
                     movement.Normalize();
 
                 playerPosition += movement * 2;
+
+                gameObjectManager.HandleInput(keyboardState);
             }
+
+            
         }
 
 
@@ -236,7 +259,7 @@ namespace GameStateManagement
 
             spriteBatch.Draw(sprite, monsterRectangle, source, color);
 
-            
+            gameObjectManager.Draw(gameTime);
 
             //spriteBatch.DrawString(gameFont, "Insert Gameplay Here", enemyPosition, Color.DarkRed);
 
