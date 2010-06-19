@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Board name="Name of Board">
+	<HorizontalWalls>
+		<Wall y="1" startX="3" endX="5" />
+		<Wall y="4" startX="1" endX="19" />
+		<Wall y="5" startX="0" endX="24" />
+	</HorizontalWalls>
+	
+	<VerticalWalls>
+		<Wall x="1" startY="0" endY="3" />
+		<Wall x="4" startY="15" endY="17" />	
+	</VerticalWalls>
+
+</Board>
