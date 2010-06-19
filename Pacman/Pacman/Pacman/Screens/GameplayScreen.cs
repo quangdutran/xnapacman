@@ -83,8 +83,14 @@ namespace GameStateManagement
         public override void LoadContent()
         {
             if (content == null)
+            {
                 content = new ContentManager(ScreenManager.Game.Services, "Content");
+                gameObjectManager.ScreenManager = ScreenManager;
+            }
 
+
+
+            //TODO: remove redundant code
             gameObjectManager.ContentManager = content;
             gameObjectManager.SpriteBatch = ScreenManager.SpriteBatch;
 
@@ -115,6 +121,7 @@ namespace GameStateManagement
         {
             gameObjectManager.UnloadContent();
 
+            gameObjectManager.ScreenManager = null;
             gameObjectManager.ContentManager = null;
             gameObjectManager.SpriteBatch = null;
 
@@ -246,7 +253,7 @@ namespace GameStateManagement
             spriteBatch.Begin();
 
             //spriteBatch.DrawString(gameFont, "// TODO", playerPosition, Color.Green);
-
+            /*
             Color color = new Color(255, 255, 255, 255);
 
 
@@ -259,9 +266,18 @@ namespace GameStateManagement
             Rectangle monsterRectangle = new Rectangle((int)playerPosition.X, (int)playerPosition.Y, 48, 48);
 
             spriteBatch.Draw(sprite, monsterRectangle, source, color);
-
+            */
             gameObjectManager.Draw(gameTime);
 
+            for (int i = 0; i <= 24; i++)
+            {
+                for (int j = 0; j <= 18; j++)
+                {
+                    spriteBatch.Draw(sprite, new Vector2(i * 24, j * 24), new Rectangle(450, 40, 1, 1), new Color(255, 255, 255, 255));
+                }
+            }
+            
+            
             //spriteBatch.DrawString(gameFont, "Insert Gameplay Here", enemyPosition, Color.DarkRed);
 
             spriteBatch.End();

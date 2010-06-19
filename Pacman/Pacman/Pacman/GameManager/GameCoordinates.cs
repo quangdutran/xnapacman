@@ -30,24 +30,41 @@ namespace Pacman.GameManager
 
         #endregion
 
+        #region Constructors
 
-        //TODO: remove magic number
         public GameCoordinates(Vector2 position)
         {
-            X = ((int)position.X) % (24*SCALE);
-            Y = ((int)position.Y) % (24*SCALE);
+            X = (int)position.X;
+            Y = (int)position.Y;
         }
-
 
         public GameCoordinates(int x, int y)
         {
-            X = x % (24*SCALE);
-            Y = y % (24*SCALE);
+            X = x;
+            Y = y;
         }
+
+        public GameCoordinates()
+        {
+            X = 0;
+            Y = 0;
+        }
+
+        #endregion
+
+        #region Conversion methods
 
         public Vector2 GetScreenPosition()
         {
-            return new Vector2(x * (24*SCALE), y * (24*SCALE) ) ;
+            return new Vector2((x+1) * (24*SCALE), (y+1) * (24*SCALE) ) ;
         }
+
+        public static GameCoordinates ScreenPositionToGameCoortinates(Vector2 position)
+        {
+            //TODO: remove magic number
+            return new GameCoordinates(((int)position.X) % (24 * SCALE), ((int)position.Y) % (24 * SCALE));
+        }
+
+        #endregion
     }
 }
