@@ -18,7 +18,7 @@ namespace Pacman.GameObjects
         protected const int OBJECT_SIZE = 24;
         
         //TODO: move to another place
-        protected const int SCALE = 2;
+        public const int SCALE = 1;
 
         protected GameCoordinates gamePosition;
         protected Vector2 screenPosition;

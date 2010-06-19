@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Pacman.GameObjects;
 
 namespace Pacman.GameManager
 {
     class GameCoordinates
     {
+        //TODO: remove
+        public const int SCALE = 1;
+
         #region Properties
 
         private int x;
@@ -28,11 +32,22 @@ namespace Pacman.GameManager
 
 
         //TODO: remove magic number
-        GameCoordinates(Vector2 position)
+        public GameCoordinates(Vector2 position)
         {
-            X = ((int)position.X) % 24;
-            Y = ((int)position.Y) % 24;
+            X = ((int)position.X) % (24*SCALE);
+            Y = ((int)position.Y) % (24*SCALE);
+        }
 
+
+        public GameCoordinates(int x, int y)
+        {
+            X = x % (24*SCALE);
+            Y = y % (24*SCALE);
+        }
+
+        public Vector2 GetScreenPosition()
+        {
+            return new Vector2(x * (24*SCALE), y * (24*SCALE) ) ;
         }
     }
 }

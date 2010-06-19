@@ -69,6 +69,13 @@ namespace Pacman.GameObjects
             monsters.Add(new MonsterGameObject(MonsterGameObject.MonsterGameObjectColor.Red));
 
 
+            walls.Add(new VerticalWallGameObject(2, 3, 8));
+            walls.Add(new VerticalWallGameObject(5, 1, 3));
+
+            walls.Add(new HorizontalWallGameObject(1, 1, 3));
+            walls.Add(new HorizontalWallGameObject(2, 3, 8));
+
+
             listOfAllGameObjects.Add(monsters);
             listOfAllGameObjects.Add(dots);
             listOfAllGameObjects.Add(walls);
