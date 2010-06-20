@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Board name="tworcza">
+	<HorizontalWalls>
+		<Wall y="1" startX="1" endX="11" />
+		<Wall y="1" startX="13" endX="23" />
+		<Wall y="17" startX="13" endX="23" />
+		<Wall y="17" startX="1" endX="11" />
+		<Wall y="2" startX="2" endX="5" />
+		<Wall y="2" startX="6" endX="9" />
+		<Wall y="2" startX="15" endX="18" />
+		<Wall y="2" startX="19" endX="22" />
+		<Wall y="3" startX="4" endX="7" />
+		<Wall y="3" startX="17" endX="20" />		
+		<Wall y="4" startX="10" endX="11" />		
+		<Wall y="4" startX="13" endX="14" />		
+		<Wall y="5" startX="2" endX="5" />
+		<Wall y="5" startX="8" endX="9" />
+		<Wall y="5" startX="10" endX="11" />
+		<Wall y="5" startX="13" endX="14" />
+		<Wall y="5" startX="15" endX="16" />	
+		<Wall y="5" startX="19" endX="22" />
+		<Wall y="6" startX="1" endX="4" />
+		<Wall y="6" startX="5" endX="7" />	
+		<Wall y="6" startX="11" endX="13" />			
+		<Wall y="6" startX="17" endX="19" />	
+		<Wall y="6" startX="20" endX="23" />	
+		<Wall y="8" startX="1" endX="4" />	
+		<Wall y="8" startX="20" endX="23" />
+		<Wall y="8" startX="9" endX="10" />
+		<Wall y="8" startX="14" endX="15" />
+		<Wall y="9" startX="7" endX="9" />
+		<Wall y="9" startX="15" endX="17" />
+		<Wall y="10" startX="1" endX="4" />
+		<Wall y="10" startX="10" endX="11" />
+		<Wall y="10" startX="20" endX="23" />
+		<Wall y="10" startX="13" endX="14" />
+		<Wall y="12" startX="1" endX="4" />
+		<Wall y="12" startX="10" endX="14" />
+		<Wall y="12" startX="20" endX="23" />
+		<Wall y="13" startX="2" endX="4" />
+		<Wall y="13" startX="9" endX="11" />
+		<Wall y="13" startX="13" endX="15" />
+		<Wall y="13" startX="20" endX="22" />
+		<Wall y="14" startX="1" endX="2" />
+		<Wall y="14" startX="11" endX="13" />
+		<Wall y="14" startX="22" endX="23" />
+		<Wall y="15" startX="8" endX="16" />
+		<Wall y="16" startX="2" endX="9" />
+		<Wall y="16" startX="15" endX="22" />
+
+
+	</HorizontalWalls>
+	
+	<VerticalWalls>
+		<Wall x="1" startY="1" endY="6" />
+	    <Wall x="1" startY="12" endY="17" />
+		<Wall x="23" startY="1" endY="6" />
+	    <Wall x="23" startY="12" endY="17" />
+		<Wall x="4" startY="6" endY="8" />
+		<Wall x="4" startY="10" endY="12" />	
+		<Wall x="4" startY="13" endY="15" />
+		<Wall x="5" startY="7" endY="8" />
+		<Wall x="5" startY="10" endY="14" />
+		<Wall x="6" startY="14" endY="16" />
+		<Wall x="7" startY="4" endY="11" />		
+		<Wall x="9" startY="5" endY="8" />
+	    <Wall x="10" startY="10" endY="12" />
+		<Wall x="10" startY="4" endY="5" />
+		<Wall x="11" startY="1" endY="4" />
+		<Wall x="11" startY="13" endY="14" />
+		<Wall x="12" startY="6" endY="8" />
+		<Wall x="12" startY="14" endY="16" />
+		<Wall x="20" startY="6" endY="8" />
+		<Wall x="20" startY="10" endY="12" />	
+		<Wall x="20" startY="13" endY="15" />
+		<Wall x="19" startY="7" endY="8" />
+		<Wall x="19" startY="10" endY="14" />
+		<Wall x="18" startY="14" endY="16" />
+		<Wall x="17" startY="4" endY="11" />		
+		<Wall x="15" startY="5" endY="8" />
+	    <Wall x="14" startY="10" endY="12" />
+		<Wall x="14" startY="4" endY="5" />
+		<Wall x="13" startY="1" endY="4" />
+		<Wall x="13" startY="13" endY="14" />
+
+		
+		</VerticalWalls>
+
+</Board>

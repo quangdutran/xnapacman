@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Board name="grecja">
+	<HorizontalWalls>
+		<Wall y="1" startX="1" endX="2" />
+		
+	</HorizontalWalls>
+	
+	<VerticalWalls>
+	</VerticalWalls>
+
+</Board>
