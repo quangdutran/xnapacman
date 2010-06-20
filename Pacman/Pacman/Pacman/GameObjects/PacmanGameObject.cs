@@ -30,6 +30,11 @@ namespace Pacman.GameObjects
 
         direction lastMove;
         direction movementDirection;
+
+
+        int points=0;
+        SpriteFont gameFont2;
+
         const int FRAME_COUNT = 3;
 
         const int TOLERANCE = 2;
@@ -67,6 +72,10 @@ namespace Pacman.GameObjects
         public override void LoadContent()
         {
             this.source = new Rectangle(5*OBJECT_SIZE, 4*OBJECT_SIZE, OBJECT_SIZE, OBJECT_SIZE);
+
+            gameFont2 = Content.Load<SpriteFont>("gamefont2");
+
+
         }
 
         public override void UnloadContent()
@@ -77,83 +86,96 @@ namespace Pacman.GameObjects
 
         #endregion
 
-        #region Update, HandleInput and Draw
+        #region Update
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
-            updateDelta += gameTime.ElapsedGameTime.Milliseconds;
-
-            //TODO: remove magic number
-            int step = 3;
-            
-            Vector2 move = Vector2.Zero;
-
-            move = CalculateMove(lastMove, updateDelta, step);
-     
-            /*
-            if (move.Length() > 1)
-                move.Normalize();
-            */
-
-
-/*       */ //calculate how far coordinate is from Path and compere it with Torerance
-/* ----> */ int moduloY = ((int)(screenPosition.Y + move.Y)) % GameObject.OBJECT_SIZE;
-/*       */ bool /*onYPath*/ onHorizontalPath = GameObject.OBJECT_SIZE / 2 - Math.Abs(moduloY - GameObject.OBJECT_SIZE / 2) <= TOLERANCE;
-/*       */
-            
-            
-
-
-/*   |   */
-/*   |   */ int moduloX = ((int)(screenPosition.X + move.X)) % GameObject.OBJECT_SIZE;
-/*   |   */ bool /*onXPath*/ onVerticalPath = GameObject.OBJECT_SIZE / 2 - Math.Abs(moduloX - GameObject.OBJECT_SIZE / 2) <= TOLERANCE;
-/*   V   */
-
-
-            bool moved = false;
-
-
-            //changing move direction
-            if (((onVerticalPath && !WasOnVerticalPath()) || onHorizontalPath && !WasOnHorizontalPath()) &&
-
-                //sprawdzanie kolizji powinno być już wg. poprawionych koordynatów.!
-                !CollisionManager.getInstance().IsCollision(roundRectangleToPath(this.ScreenRectangle, move, lastMove, onHorizontalPath, onVerticalPath), lastMove, GameObjectType.WALLS))
+            if (true)
             {
-                this.screenPosition += new Vector2((int)move.X, (int)move.Y);
-                movementDirection = lastMove;
-                moved = true;
+
+                updateDelta += gameTime.ElapsedGameTime.Milliseconds;
+
+                //TODO: remove magic number
+                float step = 3.0f;
+
+                Vector2 move = Vector2.Zero;
+
+                move = CalculateMove(lastMove, updateDelta, step);
+
+                /*
+                if (move.Length() > 1)
+                    move.Normalize();
+                */
+
+
+                /*       */
+                //calculate how far coordinate is from Path and compere it with Torerance
+                /* ----> */
+                int moduloY = ((int)(screenPosition.Y + move.Y)) % GameObject.OBJECT_SIZE;
+                /*       */
+                bool /*onYPath*/ onHorizontalPath = GameObject.OBJECT_SIZE / 2 - Math.Abs(moduloY - GameObject.OBJECT_SIZE / 2) <= TOLERANCE;
+                /*       */
+
+
+
+
+                /*   |   */
+                /*   |   */
+                int moduloX = ((int)(screenPosition.X + move.X)) % GameObject.OBJECT_SIZE;
+                /*   |   */
+                bool /*onXPath*/ onVerticalPath = GameObject.OBJECT_SIZE / 2 - Math.Abs(moduloX - GameObject.OBJECT_SIZE / 2) <= TOLERANCE;
+                /*   V   */
+
+
+                bool moved = false;
+
+
+                //changing move direction
+                if (((onVerticalPath && !WasOnVerticalPath()) || onHorizontalPath && !WasOnHorizontalPath()) &&
+
+                    //sprawdzanie kolizji powinno być już wg. poprawionych koordynatów.!
+                    !CollisionManager.getInstance().IsCollision(roundRectangleToPath(this.ScreenRectangle, move, lastMove, onHorizontalPath, onVerticalPath), lastMove, GameObjectType.WALLS))
+                {
+                    this.screenPosition += new Vector2((int)move.X, (int)move.Y);
+                    movementDirection = lastMove;
+                    moved = true;
+                }
+                else if (!CollisionManager.getInstance().IsCollision(roundRectangleToPath(this.ScreenRectangle, move, movementDirection, onHorizontalPath, onVerticalPath), movementDirection, GameObjectType.WALLS))
+                {
+                    move = CalculateMove(movementDirection, updateDelta, step);
+                    this.screenPosition += new Vector2((int)move.X, (int)move.Y);
+                    moved = true;
+                }
+
+
+                if (moved)
+                    this.ScreenRectangle = roundRectangleToPath(this.ScreenRectangle, move, movementDirection, onHorizontalPath, onVerticalPath);
+
+                /*
+                if (moved && onXPath && (lastMove != direction.Right && lastMove != direction.Left)) //if it on pathX, then should be exactly on this path
+                {
+                    //round to neerest 24*X
+                    float roundX = (((int)this.ScreenPosition.X) % GameObject.OBJECT_SIZE) / (float)GameObject.OBJECT_SIZE;
+                    this.screenPosition.X = (((int)this.ScreenPosition.X) / GameObject.OBJECT_SIZE) * (float)GameObject.OBJECT_SIZE;
+                    this.screenPosition.X += (int)(Math.Round(roundX) * OBJECT_SIZE);
+                }
+
+                if (moved && onYPath && (lastMove != direction.Up && lastMove != direction.Down)) //if it on pathY, then should be exactly on this path
+                {
+                    //round to neerest 24*Y
+                    float roundY = (((int)this.ScreenPosition.Y) % GameObject.OBJECT_SIZE) / (float)GameObject.OBJECT_SIZE;
+                    this.screenPosition.Y = (((int)this.ScreenPosition.Y) / GameObject.OBJECT_SIZE) * (float)GameObject.OBJECT_SIZE;
+                    this.screenPosition.Y += (int)(Math.Round(roundY) * OBJECT_SIZE);
+                }
+                */
+
+
+
+                if (CollisionManager.getInstance().IsCollision(ScreenRectangle, movementDirection, GameObjectType.DOTS))
+                    points += 10;
+
+                updateDelta = 0;
             }
-            else if (!CollisionManager.getInstance().IsCollision(roundRectangleToPath(this.ScreenRectangle, move, movementDirection, onHorizontalPath, onVerticalPath), movementDirection, GameObjectType.WALLS))
-            {
-                move = CalculateMove(movementDirection, updateDelta, step);
-                this.screenPosition += new Vector2((int)move.X,(int)move.Y);
-                moved = true;
-            }
-
-
-            if (moved)
-                this.ScreenRectangle = roundRectangleToPath(this.ScreenRectangle, move, movementDirection, onHorizontalPath, onVerticalPath);
-
-            /*
-            if (moved && onXPath && (lastMove != direction.Right && lastMove != direction.Left)) //if it on pathX, then should be exactly on this path
-            {
-                //round to neerest 24*X
-                float roundX = (((int)this.ScreenPosition.X) % GameObject.OBJECT_SIZE) / (float)GameObject.OBJECT_SIZE;
-                this.screenPosition.X = (((int)this.ScreenPosition.X) / GameObject.OBJECT_SIZE) * (float)GameObject.OBJECT_SIZE;
-                this.screenPosition.X += (int)(Math.Round(roundX) * OBJECT_SIZE);
-            }
-
-            if (moved && onYPath && (lastMove != direction.Up && lastMove != direction.Down)) //if it on pathY, then should be exactly on this path
-            {
-                //round to neerest 24*Y
-                float roundY = (((int)this.ScreenPosition.Y) % GameObject.OBJECT_SIZE) / (float)GameObject.OBJECT_SIZE;
-                this.screenPosition.Y = (((int)this.ScreenPosition.Y) / GameObject.OBJECT_SIZE) * (float)GameObject.OBJECT_SIZE;
-                this.screenPosition.Y += (int)(Math.Round(roundY) * OBJECT_SIZE);
-            }
-            */
-
-            updateDelta = 0;
-            
 
         }
 
@@ -183,8 +205,6 @@ namespace Pacman.GameObjects
 
         }
 
-
-
         private bool WasOnVerticalPath()
         {
             return movementDirection == direction.Down || movementDirection == direction.Up;
@@ -195,7 +215,7 @@ namespace Pacman.GameObjects
             return movementDirection == direction.Right || movementDirection == direction.Left;
         }
 
-        private Vector2 CalculateMove(direction direction, int updateDelta, int step )
+        private Vector2 CalculateMove(direction direction, int updateDelta, float step )
         {
             Vector2 move = Vector2.Zero;
             switch (direction)
@@ -220,6 +240,9 @@ namespace Pacman.GameObjects
             return move;
         }
 
+        #endregion
+
+        #region HandleInput and Draw
 
         public override void HandleInput(KeyboardState keyboardState)
         {
@@ -254,22 +277,26 @@ namespace Pacman.GameObjects
                 if (movement.Length() > 1)
                     movement.Normalize();
             
-                //this.screenPosition += movement ;
+                //this.screenPosition += movement*2 ;
         }
 
         public override void Draw(GameTime gameTime)
         {
                 int x = (int)screenPosition.X;
 
-                int i = (x % (20 * SCALE)) / (4 * SCALE);
+                int i = (x % (24 * SCALE)) / (6 * SCALE);
 
-                Rectangle animateSource = new Rectangle(((2 - Math.Abs((i - 2))) * OBJECT_SIZE) +
+                int[] array = new int[]{0, 1, 2, 1};
+
+                int img = array[i]; //(2 - Math.Abs((i - 2))); //generates 0121(0) 0121(0)...
+
+                Rectangle animateSource = new Rectangle(( img * OBJECT_SIZE) +
                                                         (FRAME_COUNT * OBJECT_SIZE * (int)movementDirection) + source.X,
                                                         source.Y,
                                                         source.Width,
                                                         source.Height);
 
-                Rectangle pacmanRectangle = new Rectangle((int)screenPosition.X, (int)screenPosition.Y, SCALE * OBJECT_SIZE, SCALE * OBJECT_SIZE);
+                Rectangle pacmanRectangle = new Rectangle((int)screenPosition.X, (int)screenPosition.Y-2, SCALE * OBJECT_SIZE, SCALE * OBJECT_SIZE);
 
                 GameObject.SpriteBatch.Draw(sprite, pacmanRectangle, animateSource, Color.White);
         }

@@ -97,6 +97,7 @@
     <Compile Include="GameObjects\MonsterHouseGameObject.cs" />
     <Compile Include="GameObjects\PacmanGameObject.cs" />
     <Compile Include="GameObjects\PortalGameObject.cs" />
+    <Compile Include="GameObjects\ToolBarGameObject.cs" />
     <Compile Include="GameObjects\WallGameObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />

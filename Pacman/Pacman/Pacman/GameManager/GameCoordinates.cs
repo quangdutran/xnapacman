@@ -62,7 +62,7 @@ namespace Pacman.GameManager
         public static GameCoordinates ScreenPositionToGameCoortinates(Vector2 position)
         {
             //TODO: remove magic number
-            return new GameCoordinates(((int)position.X) % (24 * SCALE), ((int)position.Y) % (24 * SCALE));
+            return new GameCoordinates(((int)position.X) / (24 * SCALE)-1, ((int)position.Y) / (24 * SCALE)-1);
         }
 
         #endregion
