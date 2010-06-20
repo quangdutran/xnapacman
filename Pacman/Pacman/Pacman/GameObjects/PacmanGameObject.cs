@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using GameStateManagement;
 using Microsoft.Xna.Framework.Input;
 using Pacman.GameManager;
+using System.Diagnostics;
 
 namespace Pacman.GameObjects
 {
@@ -41,6 +42,12 @@ namespace Pacman.GameObjects
         #endregion
 
         #region Properties
+
+        public Rectangle ScreenRectangle
+        {
+            get { return new Rectangle((int)screenPosition.X, (int)screenPosition.Y, GameObject.OBJECT_SIZE * GameObject.SCALE, GameObject.OBJECT_SIZE * GameObject.SCALE); }
+            set { screenPosition.X = value.X; screenPosition.Y = value.Y; }
+        }
 
         public Vector2 ScreenPosition
         {
@@ -88,36 +95,46 @@ namespace Pacman.GameObjects
                 move.Normalize();
             */
 
-            //calculate how far coordinate is from Path and compere it with Torerance
-            int moduloX = ((int)(screenPosition.X + move.X)) % GameObject.OBJECT_SIZE;
-            bool onXPath = GameObject.OBJECT_SIZE / 2 - Math.Abs(moduloX - GameObject.OBJECT_SIZE / 2) <= TOLERANCE;
 
-            int moduloY = ((int)(screenPosition.Y + move.Y)) % GameObject.OBJECT_SIZE;
-            bool onYPath = GameObject.OBJECT_SIZE / 2 - Math.Abs(moduloY - GameObject.OBJECT_SIZE / 2) <= TOLERANCE;
+/*       */ //calculate how far coordinate is from Path and compere it with Torerance
+/* ----> */ int moduloY = ((int)(screenPosition.Y + move.Y)) % GameObject.OBJECT_SIZE;
+/*       */ bool /*onYPath*/ onHorizontalPath = GameObject.OBJECT_SIZE / 2 - Math.Abs(moduloY - GameObject.OBJECT_SIZE / 2) <= TOLERANCE;
+/*       */
+            
+            
+
+
+/*   |   */
+/*   |   */ int moduloX = ((int)(screenPosition.X + move.X)) % GameObject.OBJECT_SIZE;
+/*   |   */ bool /*onXPath*/ onVerticalPath = GameObject.OBJECT_SIZE / 2 - Math.Abs(moduloX - GameObject.OBJECT_SIZE / 2) <= TOLERANCE;
+/*   V   */
+
 
             bool moved = false;
 
 
             //changing move direction
-            if (((onXPath && WasNotOnXPath()) || onYPath && WasNotOnYPath()) &&
+            if (((onVerticalPath && !WasOnVerticalPath()) || onHorizontalPath && !WasOnHorizontalPath()) &&
 
                 //sprawdzanie kolizji powinno być już wg. poprawionych koordynatów.!
-                !CollisionManager.getInstance().IsCollision(this,lastMove,move,GameObjectType.WALLS))
+                !CollisionManager.getInstance().IsCollision(roundRectangleToPath(this.ScreenRectangle, move, lastMove, onHorizontalPath, onVerticalPath), lastMove, GameObjectType.WALLS))
             {
                 this.screenPosition += new Vector2((int)move.X, (int)move.Y);
                 movementDirection = lastMove;
                 moved = true;
             }
-            else if (!CollisionManager.getInstance().IsCollision(this, 
-                    movementDirection, move = CalculateMove(movementDirection, updateDelta, step), 
-                    GameObjectType.WALLS))
+            else if (!CollisionManager.getInstance().IsCollision(roundRectangleToPath(this.ScreenRectangle, move, movementDirection, onHorizontalPath, onVerticalPath), movementDirection, GameObjectType.WALLS))
             {
-            
+                move = CalculateMove(movementDirection, updateDelta, step);
                 this.screenPosition += new Vector2((int)move.X,(int)move.Y);
                 moved = true;
             }
 
 
+            if (moved)
+                this.ScreenRectangle = roundRectangleToPath(this.ScreenRectangle, move, movementDirection, onHorizontalPath, onVerticalPath);
+
+            /*
             if (moved && onXPath && (lastMove != direction.Right && lastMove != direction.Left)) //if it on pathX, then should be exactly on this path
             {
                 //round to neerest 24*X
@@ -133,23 +150,49 @@ namespace Pacman.GameObjects
                 this.screenPosition.Y = (((int)this.ScreenPosition.Y) / GameObject.OBJECT_SIZE) * (float)GameObject.OBJECT_SIZE;
                 this.screenPosition.Y += (int)(Math.Round(roundY) * OBJECT_SIZE);
             }
-
+            */
 
             updateDelta = 0;
             
 
         }
 
-
-
-        private bool WasNotOnXPath()
+        private Rectangle roundRectangleToPath(Rectangle screenRectangle, Vector2 move, direction direction, bool onHorizontalPath, bool onVerticalPath)
         {
-            return !(movementDirection == direction.Down || movementDirection == direction.Up);
+            screenRectangle.X += (int)move.X;
+            screenRectangle.Y += (int)move.Y;
+
+            if (onVerticalPath && (direction != direction.Right && direction != direction.Left)) //if it on pathX, then should be exactly on this path
+            {
+                //round to neerest 24*X
+                float roundX = (((int)screenRectangle.X) % GameObject.OBJECT_SIZE) / (float)GameObject.OBJECT_SIZE;
+                /*base*/ screenRectangle.X = (((int)screenRectangle.X) / GameObject.OBJECT_SIZE) * GameObject.OBJECT_SIZE;
+                screenRectangle.X += (int)(Math.Round(roundX) * OBJECT_SIZE);
+            }
+
+            if (onHorizontalPath && (direction != direction.Up && direction != direction.Down)) //if it on pathY, then should be exactly on this path
+            {
+                //round to neerest 24*Y
+                float roundY = (((int)screenRectangle.Y) % GameObject.OBJECT_SIZE) / (float)GameObject.OBJECT_SIZE;
+                /*base*/ screenRectangle.Y = (((int)screenRectangle.Y) / GameObject.OBJECT_SIZE) * GameObject.OBJECT_SIZE;
+                screenRectangle.Y += (int)(Math.Round(roundY) * OBJECT_SIZE);
+            }
+
+            
+            return screenRectangle;
+
         }
 
-        private bool WasNotOnYPath()
+
+
+        private bool WasOnVerticalPath()
         {
-            return !(movementDirection == direction.Right || movementDirection == direction.Left);
+            return movementDirection == direction.Down || movementDirection == direction.Up;
+        }
+
+        private bool WasOnHorizontalPath()
+        {// <------------->
+            return movementDirection == direction.Right || movementDirection == direction.Left;
         }
 
         private Vector2 CalculateMove(direction direction, int updateDelta, int step )
