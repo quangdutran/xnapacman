@@ -10,6 +10,7 @@
 #region Using Statements
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 #endregion
 
 namespace GameStateManagement
@@ -24,8 +25,28 @@ namespace GameStateManagement
     {
         #region Fields
 
-        GraphicsDeviceManager graphics;
+        private GraphicsDeviceManager graphics;
         ScreenManager screenManager;
+
+        private static GameStateManagementGame instance = null;
+
+
+        public static bool FullScreen
+        {
+            get {
+                if (instance == null)
+                {
+                    throw new Exception("GameStateManagementGame is not initialized!");
+                }
+                   
+                return instance.graphics.IsFullScreen;
+            }
+
+            set {
+                if (value != instance.graphics.IsFullScreen)
+                    instance.graphics.ToggleFullScreen();
+            }
+        }
 
         #endregion
 
@@ -37,6 +58,8 @@ namespace GameStateManagement
         /// </summary>
         public GameStateManagementGame()
         {
+            instance = this;
+
             Content.RootDirectory = "Content";
 
             graphics = new GraphicsDeviceManager(this);
@@ -57,6 +80,8 @@ namespace GameStateManagement
             screenManager.AddScreen(new BackgroundScreen(), null);
             screenManager.AddScreen(new MainMenuScreen(), null);
         }
+
+
 
 
         #endregion

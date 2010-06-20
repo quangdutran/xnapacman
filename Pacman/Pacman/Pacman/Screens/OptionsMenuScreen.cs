@@ -33,6 +33,7 @@ namespace GameStateManagement
         */
 
         MenuEntry board;
+        MenuEntry fullScreen;
 
         enum Ungulate
         {
@@ -65,7 +66,7 @@ namespace GameStateManagement
         static int elf = 23;
 
         static Dictionary<String, String> BoardsPaths = new Dictionary<string, string>();
-        List<String> listOfBoards;
+        static bool isFullScreen;
 
         #endregion
 
@@ -87,8 +88,10 @@ namespace GameStateManagement
             */
 
             LoadBoardList();
+            isFullScreen = GameStateManagementGame.FullScreen;
 
             board = new MenuEntry(string.Empty);
+            fullScreen = new MenuEntry(string.Empty);
 
             SetMenuEntryText();
 
@@ -104,7 +107,8 @@ namespace GameStateManagement
             elfMenuEntry.Selected += ElfMenuEntrySelected;
              */
             board.Selected += BoardMenuEntrySelected;
-            backMenuEntry.Selected += OnCancel;
+            fullScreen.Selected += FullScreenSelected;
+            backMenuEntry.Selected += OnSave;
             
             // Add entries to the menu.
             /*
@@ -114,6 +118,7 @@ namespace GameStateManagement
             MenuEntries.Add(elfMenuEntry);
             */
             MenuEntries.Add(board);
+            MenuEntries.Add(fullScreen);
             MenuEntries.Add(backMenuEntry);
         }
 
@@ -153,6 +158,7 @@ namespace GameStateManagement
                     endReached = !enumerator.MoveNext();
                 }
 
+
                 if (enumerator.Current.Key != key && endReached)
                 {
                     enumerator = BoardsPaths.GetEnumerator();
@@ -170,7 +176,7 @@ namespace GameStateManagement
         void SetMenuEntryText()
         {
             board.Text = "Board: " + enumerator.Current.Key;
-
+            fullScreen.Text = "Full screen: " + (isFullScreen ? "on" : "off");
             /*
             ungulateMenuEntry.Text = "Preferred ungulate: " + currentUngulate;
             languageMenuEntry.Text = "Language: " + languages[currentLanguage];
@@ -243,6 +249,22 @@ namespace GameStateManagement
 
             SetMenuEntryText();
         }
+
+        void FullScreenSelected(object sender, PlayerIndexEventArgs e)
+        {
+            isFullScreen = !isFullScreen;
+            SetMenuEntryText();
+        }
+
+        void OnSave(object sender, PlayerIndexEventArgs e)
+        {
+            if (isFullScreen != GameStateManagementGame.FullScreen)
+                GameStateManagementGame.FullScreen = isFullScreen;
+
+            OnCancel(sender, e);
+            
+        }
+
 
         #endregion
     }
