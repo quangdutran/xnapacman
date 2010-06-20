@@ -118,6 +118,8 @@ namespace Pacman.GameObjects
                 walls.Add(new VerticalWallGameObject(bottomRightArena.X, topLeftArena.Y, bottomRightArena.Y));
             }
 
+            dots = DotGameObject.Generate(bottomRightArena.X, bottomRightArena.Y);
+
             listOfAllGameObjects.Add(monsters);
             listOfAllGameObjects.Add(dots);
             listOfAllGameObjects.Add(walls);
@@ -127,6 +129,10 @@ namespace Pacman.GameObjects
             pacman = new PacmanGameObject();
             pacmans.Add(pacman);
             listOfAllGameObjects.Add(pacmans);
+
+            List<GameObject> other = new List<GameObject>();
+            other.Add(new ToolBarGameObject());
+            listOfAllGameObjects.Add(other);
 
             /*
             List<GameObject> monsterHouses = new List<GameObject>();
@@ -140,6 +146,8 @@ namespace Pacman.GameObjects
                                         pacmans, monsters);
 
 
+
+
             GameObject.LoadStaticContent();
 
             foreach(List<GameObject> list in listOfAllGameObjects)
@@ -147,6 +155,9 @@ namespace Pacman.GameObjects
                 {
                     gameObject.LoadContent();
                 }
+
+
+
         }
 
         public void UnloadContent()

@@ -38,6 +38,9 @@ namespace Pacman.GameObjects
         
         //Static fields
         protected static Texture2D sprite;
+        protected static SpriteFont gameFontCourierNew20;
+        protected static SpriteFont gameFontCourierNew32;
+        protected static SpriteFont gameFontCourierNew40;
         
         //TODO: to delete
         protected static Random random = new Random();
@@ -75,6 +78,9 @@ namespace Pacman.GameObjects
         //        content = new ContentManager(ScreenManager.Game.Services, "Content");
 
             sprite = content.Load<Texture2D>("sprite");
+            gameFontCourierNew20 = content.Load<SpriteFont>("gameFontCourierNew20");
+            gameFontCourierNew32 = content.Load<SpriteFont>("gameFontCourierNew32");
+            gameFontCourierNew40 = content.Load<SpriteFont>("gameFontCourierNew40");
         }
 
         public abstract void LoadContent();
