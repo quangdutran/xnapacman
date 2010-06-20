@@ -6,7 +6,9 @@
 		<Wall y="1" startX="13" endX="23" />
 		<Wall y="17" startX="13" endX="23" />
 		<Wall y="3" startX="8" endX="16" />
-		<Wall y="5" startX="8" endX="16" />
+		<Wall y="5" startX="8" endX="10" />
+		<Wall y="5" startX="11" endX="13" />
+		<Wall y="5" startX="14" endX="16" />
 		<Wall y="7" startX="10" endX="14" />
 		<Wall y="10" startX="10" endX="11" />		
 		<Wall y="10" startX="13" endX="14" />		
