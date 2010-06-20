@@ -73,7 +73,7 @@ namespace GameStateManagement
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
 
-            gameObjectManager = new GameObjectManager();
+            
         }
 
 
@@ -85,9 +85,10 @@ namespace GameStateManagement
             if (content == null)
             {
                 content = new ContentManager(ScreenManager.Game.Services, "Content");
-                gameObjectManager.ScreenManager = ScreenManager;
+                
             }
-
+            gameObjectManager = new GameObjectManager();
+            gameObjectManager.ScreenManager = ScreenManager;
 
 
             //TODO: remove redundant code
