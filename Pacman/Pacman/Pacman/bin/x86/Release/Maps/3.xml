@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Board name="grecja">
+<Board name="grecja 2">
 	<HorizontalWalls>
 		<Wall y="1" startX="1" endX="11" />
 		<Wall y="17" startX="1" endX="11" />
