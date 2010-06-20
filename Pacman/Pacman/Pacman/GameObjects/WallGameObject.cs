@@ -30,10 +30,12 @@ namespace Pacman.GameObjects
 
         //GameCoordinates base./*start*/gamePosition;
 
-        protected GameCoordinates Start
+
+        //TODO: set propert accessor modifiers
+        public GameCoordinates Start
         {
-            get { return gamePosition; }
-            set { 
+            /*public*/ get { return gamePosition; }
+            /*private*/ internal set { 
                 /*start*/gamePosition = value;
 
                 screenPosition.X = /*start*/gamePosition.X * OBJECT_SIZE;
@@ -43,10 +45,11 @@ namespace Pacman.GameObjects
 
         GameCoordinates endGamePosition;
 
-        protected GameCoordinates End
+        //TODO: set propert accessor modifiers
+        public GameCoordinates End
         {
-            get { return endGamePosition; }
-            set
+            /*public*/ get { return endGamePosition; }
+            /*private*/ internal set
             {
                 endGamePosition = value;
 
@@ -57,7 +60,8 @@ namespace Pacman.GameObjects
 
         //Vector2 base./*start*/ScreenPosition;
 
-        protected Vector2 ScreenPosition
+        //for public usage, please see GameCoordinates.GetScreenPosition()
+        private Vector2 ScreenPosition
         {
             get { return /*start*/screenPosition; }
         }
@@ -69,6 +73,8 @@ namespace Pacman.GameObjects
             get { return endScreenPosition; }
         }
 
+        public abstract int Length();
+        
         #endregion
 
         #region Initialization
@@ -215,7 +221,14 @@ namespace Pacman.GameObjects
 
         #endregion
 
+        #region Other
 
+        public override int Length()
+        {
+            return End.Y - Start.Y;
+        }
+
+        #endregion
     }
 
 
@@ -333,6 +346,15 @@ namespace Pacman.GameObjects
                 color);
         }
 
+        #endregion
+
+        #region Other
+
+        public override int Length()
+        {
+            return End.X - Start.X;
+        }
+        
         #endregion
     }
 }

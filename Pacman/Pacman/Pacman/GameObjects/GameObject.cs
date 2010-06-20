@@ -13,9 +13,21 @@ namespace Pacman.GameObjects
 {
     abstract class GameObject
     {
+        
+        public enum GameObjectType
+        {
+            WALLS,
+            PORTALS,
+            MONSTER_HOUSES,
+            DOTS,
+            FRUITS,
+            PACMANS,
+            MONSTERS
+        }
+        
         #region Fields
 
-        protected const int OBJECT_SIZE = 24;
+        public static int OBJECT_SIZE = 24;
         
         //TODO: move to another place
         public const int SCALE = 1;
@@ -31,7 +43,6 @@ namespace Pacman.GameObjects
         protected static Random random = new Random();
 
         #endregion
-
 
         #region Properties
 
@@ -53,7 +64,6 @@ namespace Pacman.GameObjects
         }
 
         #endregion
-
 
         #region Initialization
 

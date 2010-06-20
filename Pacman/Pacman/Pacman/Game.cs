@@ -63,17 +63,38 @@ namespace GameStateManagement
 
         #region Draw
 
+        int updateDelta = 0;
+
+        protected override void Update(GameTime gameTime)
+        {
+            updateDelta += gameTime.ElapsedRealTime.Milliseconds;
+            //if (updateDelta > 15)
+            {
+                base.Update(gameTime);
+                updateDelta = 0;
+            }
+        }
+
+
+        int drawDelta = 0;
 
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
         protected override void Draw(GameTime gameTime)
         {
-            graphics.GraphicsDevice.Clear(Color.Black);
+            drawDelta += gameTime.ElapsedRealTime.Milliseconds;
 
-            // The real drawing happens inside the screen manager component.
-            base.Draw(gameTime);
+            if (drawDelta > 30)
+            {
+                graphics.GraphicsDevice.Clear(Color.Black);
+
+                // The real drawing happens inside the screen manager component.
+                base.Draw(gameTime);
+            }
         }
+
+
 
 
         #endregion

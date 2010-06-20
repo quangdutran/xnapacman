@@ -161,6 +161,8 @@ namespace GameStateManagement
 
                 // TODO: this game isn't very fun! You could probably improve
                 // it by inserting something more interesting in this space :-)
+
+                gameObjectManager.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
             }
         }
 
@@ -243,9 +245,9 @@ namespace GameStateManagement
         public override void Draw(GameTime gameTime)
         {
             // This game has a blue background. Why? Because!
-            ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
-                                               /*Color.CornflowerBlue*/
-                                               Color.Black, 0, 0);
+            //ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
+              //                                 /*Color.CornflowerBlue*/
+                //                               Color.Black, 0, 0);
 
             // Our player and enemy are both actually just text strings.
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
@@ -269,6 +271,7 @@ namespace GameStateManagement
             */
             gameObjectManager.Draw(gameTime);
 
+            /*
             for (int i = 0; i <= 24; i++)
             {
                 for (int j = 0; j <= 18; j++)
@@ -276,7 +279,7 @@ namespace GameStateManagement
                     spriteBatch.Draw(sprite, new Vector2(i * 24, j * 24), new Rectangle(450, 40, 1, 1), new Color(255, 255, 255, 255));
                 }
             }
-            
+            */
             
             //spriteBatch.DrawString(gameFont, "Insert Gameplay Here", enemyPosition, Color.DarkRed);
 

@@ -17,11 +17,14 @@ namespace Pacman.GameObjects
         #region Fields
 
 
+        List<GameObject> walls;
+        List<GameObject> portals = new List<GameObject>();
+        List<GameObject> monsterHouses = new List<GameObject>();
 
         List<GameObject> monsters = new List<GameObject>();
         List<GameObject> dots = new List<GameObject>();
-        List<GameObject> walls;
-        List<GameObject> portals = new List<GameObject>();
+
+
         List<GameObject> fruits = new List<GameObject>();
         List<GameObject> pacmans = new List<GameObject>();
 
@@ -29,6 +32,8 @@ namespace Pacman.GameObjects
 
         PacmanGameObject pacman;
         MonsterGameObject monsterHouse;
+
+        CollisionManager collisionManager;
 
         Board board;
 
@@ -101,23 +106,17 @@ namespace Pacman.GameObjects
             walls = board.Walls;
 
             //borders
-            
-            walls.Add(new HorizontalWallGameObject(topLeftArena.Y, topLeftArena.X, bottomRightArena.X));
-            walls.Add(new HorizontalWallGameObject(bottomRightArena.Y, topLeftArena.X, bottomRightArena.X));
+            if (
+                //false
+                true
+                )
+            {
+                walls.Add(new HorizontalWallGameObject(topLeftArena.Y, topLeftArena.X, bottomRightArena.X));
+                walls.Add(new HorizontalWallGameObject(bottomRightArena.Y, topLeftArena.X, bottomRightArena.X));
 
-            walls.Add(new VerticalWallGameObject(topLeftArena.X, topLeftArena.Y, bottomRightArena.Y));
-            walls.Add(new VerticalWallGameObject(bottomRightArena.X, topLeftArena.Y, bottomRightArena.Y));
-            
-
-
-
-            /*
-            walls.Add(new VerticalWallGameObject(2, 3, 8));
-            walls.Add(new VerticalWallGameObject(5, 1, 3));
-
-            walls.Add(new HorizontalWallGameObject(1, 1, 3));
-            walls.Add(new HorizontalWallGameObject(2, 3, 8));
-            */
+                walls.Add(new VerticalWallGameObject(topLeftArena.X, topLeftArena.Y, bottomRightArena.Y));
+                walls.Add(new VerticalWallGameObject(bottomRightArena.X, topLeftArena.Y, bottomRightArena.Y));
+            }
 
             listOfAllGameObjects.Add(monsters);
             listOfAllGameObjects.Add(dots);
@@ -135,8 +134,10 @@ namespace Pacman.GameObjects
             listOfAllGameObjects.Add(monsterHouses);
             */
 
-
-
+            collisionManager = CollisionManager.getInstance();
+            collisionManager.Initialize(walls, portals, monsterHouses,
+                                        dots, fruits,
+                                        pacmans, monsters);
 
 
             GameObject.LoadStaticContent();
@@ -166,8 +167,12 @@ namespace Pacman.GameObjects
         #region Update and Draw
 
         public void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
-        { 
-        
+        {
+            foreach (List<GameObject> list in listOfAllGameObjects)
+                foreach (GameObject gameObject in list)
+                {
+                    gameObject.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
+                }              
         }
 
         public void Draw(GameTime gameTime)

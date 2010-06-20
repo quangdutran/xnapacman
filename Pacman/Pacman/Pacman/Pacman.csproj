@@ -87,6 +87,7 @@
     <Compile Include="Game.cs" />
     <Compile Include="GameManager\Board.cs" />
     <Compile Include="GameManager\BoardFactory.cs" />
+    <Compile Include="GameManager\CollisionManager.cs" />
     <Compile Include="GameManager\GameCoordinates.cs" />
     <Compile Include="GameObjects\DotGameObject.cs" />
     <Compile Include="GameObjects\FruitGameObject.cs" />
