@@ -38,8 +38,8 @@ namespace Pacman.GameObjects
             /*private*/ internal set { 
                 /*start*/gamePosition = value;
 
-                screenPosition.X = /*start*/gamePosition.X * OBJECT_SIZE;
-                screenPosition.Y = /*start*/gamePosition.Y * OBJECT_SIZE;
+                screenVectorPosition.X = /*start*/gamePosition.X * OBJECT_SIZE;
+                screenVectorPosition.Y = /*start*/gamePosition.Y * OBJECT_SIZE;
             }
         }
 
@@ -53,8 +53,8 @@ namespace Pacman.GameObjects
             {
                 endGamePosition = value;
 
-                screenPosition.X = endGamePosition.X * OBJECT_SIZE;
-                screenPosition.Y = endGamePosition.Y * OBJECT_SIZE;
+                screenVectorPosition.X = endGamePosition.X * OBJECT_SIZE;
+                screenVectorPosition.Y = endGamePosition.Y * OBJECT_SIZE;
             }
         }
 
@@ -63,7 +63,7 @@ namespace Pacman.GameObjects
         //for public usage, please see GameCoordinates.GetScreenPosition()
         private Vector2 ScreenPosition
         {
-            get { return /*start*/screenPosition; }
+            get { return /*start*/screenVectorPosition; }
         }
 
         Vector2 endScreenPosition;

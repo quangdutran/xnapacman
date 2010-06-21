@@ -9,6 +9,8 @@
 
 #region Using Statements
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Pacman.GameObjects;
 #endregion
 
 namespace GameStateManagement
@@ -18,14 +20,16 @@ namespace GameStateManagement
     /// </summary>
     class MainMenuScreen : MenuScreen
     {
-        #region Initialization
 
+        //PacmanGameObject pacman = new PacmanGameObject();
+
+        #region Initialization
 
         /// <summary>
         /// Constructor fills in the menu contents.
         /// </summary>
         public MainMenuScreen()
-            : base("Main Menu")
+            : base("Pacman")
         {
             // Create our menu entries.
             MenuEntry playGameMenuEntry = new MenuEntry("Play Game");
@@ -55,7 +59,7 @@ namespace GameStateManagement
         void PlayGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
             LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
-                               GameplayScreen.GetInstance());
+                               new GameplayScreen());
         }
 
 
@@ -94,5 +98,31 @@ namespace GameStateManagement
 
 
         #endregion
+
+
+        #region Draw and Update
+
+
+        public override void Update(GameTime gameTime, bool otherScreenHasFocus,
+                                                   bool coveredByOtherScreen)
+        {
+            base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
+
+
+
+        }
+
+
+
+        public override void Draw(GameTime gameTime)
+        {
+            base.Draw(gameTime);
+
+            //pacman.Draw(gameTime);
+
+        }
+
+        #endregion
+
     }
 }

@@ -26,6 +26,7 @@ namespace GameStateManagement
 
         string message;
         Texture2D gradientTexture;
+        SpriteFont font;
 
         #endregion
 
@@ -54,8 +55,8 @@ namespace GameStateManagement
         /// </summary>
         public MessageBoxScreen(string message, bool includeUsageText)
         {
-            const string usageText = "\nA button, Space, Enter = ok" +
-                                     "\nB button, Esc = cancel"; 
+            const string usageText = "\nSpace, Enter = ok" +
+                                     "\nEsc = cancel"; 
             
             if (includeUsageText)
                 this.message = message + usageText;
@@ -80,6 +81,7 @@ namespace GameStateManagement
             ContentManager content = ScreenManager.Game.Content;
 
             gradientTexture = content.Load<Texture2D>("gradient");
+            font = content.Load<SpriteFont>("minimenufont");
         }
 
 
@@ -130,7 +132,6 @@ namespace GameStateManagement
         public override void Draw(GameTime gameTime)
         {
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
-            SpriteFont font = ScreenManager.Font;
 
             // Darken down any other screens that were drawn beneath the popup.
             ScreenManager.FadeBackBufferToBlack(TransitionAlpha * 2 / 3);

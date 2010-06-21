@@ -53,8 +53,8 @@ namespace Pacman.GameObjects
         {
             get
             {
-                return new Rectangle((int)screenPosition.X, 
-                                     (int)screenPosition.Y,
+                return new Rectangle((int)screenVectorPosition.X, 
+                                     (int)screenVectorPosition.Y,
                                       DOT_SIZE, 
                                       DOT_SIZE);
             }
@@ -67,22 +67,15 @@ namespace Pacman.GameObjects
 
 
 
-        public DotGameObject(int x, int y)
+        private DotGameObject(int x, int y)
         {
-            screenPosition = (new GameCoordinates(x, y)).GetScreenPosition();
-            screenPosition += new Vector2(9, 9);
+            screenVectorPosition = (new GameCoordinates(x, y)).GetScreenPosition();
+            screenVectorPosition += new Vector2(9, 9);
             visible = true;
             visibleDotCounter++;
         }
 
         #endregion
-
-
-
-        public override void Update(Microsoft.Xna.Framework.GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
-        {
-        }
-
 
 
         public override void LoadContent()
@@ -96,8 +89,8 @@ namespace Pacman.GameObjects
         {
             if (visible)
             {
-                Rectangle rect = new Rectangle((int)screenPosition.X, 
-                                               (int)screenPosition.Y,
+                Rectangle rect = new Rectangle((int)screenVectorPosition.X, 
+                                               (int)screenVectorPosition.Y,
                                                6, 
                                                6);
 
@@ -114,6 +107,10 @@ namespace Pacman.GameObjects
                 visible = false;
                 visibleDotCounter--;
             }
+        }
+
+        public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
+        {
         }
     }
 }

@@ -56,15 +56,6 @@ namespace GameStateManagement
 
         static bool loaded = false;
 
-        static Ungulate currentUngulate = Ungulate.Dromedary;
-
-        static string[] languages = { "C#", "French", "Deoxyribonucleic acid" };
-        static int currentLanguage = 0;
-
-        static bool frobnicate = true;
-
-        static int elf = 23;
-
         static Dictionary<String, String> BoardsPaths = new Dictionary<string, string>();
         static bool isFullScreen;
 
@@ -79,14 +70,6 @@ namespace GameStateManagement
         public OptionsMenuScreen()
             : base("Options")
         {
-            // Create our menu entries.
-            /*
-            ungulateMenuEntry = new MenuEntry(string.Empty);
-            languageMenuEntry = new MenuEntry(string.Empty);
-            frobnicateMenuEntry = new MenuEntry(string.Empty);
-            elfMenuEntry = new MenuEntry(string.Empty);
-            */
-
             LoadBoardList();
             isFullScreen = GameStateManagementGame.FullScreen;
 
@@ -99,24 +82,11 @@ namespace GameStateManagement
 
             // Hook up menu event handlers.
 
-
-            /*
-            ungulateMenuEntry.Selected += UngulateMenuEntrySelected;
-            languageMenuEntry.Selected += LanguageMenuEntrySelected;
-            frobnicateMenuEntry.Selected += FrobnicateMenuEntrySelected;
-            elfMenuEntry.Selected += ElfMenuEntrySelected;
-             */
             board.Selected += BoardMenuEntrySelected;
             fullScreen.Selected += FullScreenSelected;
             backMenuEntry.Selected += OnSave;
             
             // Add entries to the menu.
-            /*
-            MenuEntries.Add(ungulateMenuEntry);
-            MenuEntries.Add(languageMenuEntry);
-            MenuEntries.Add(frobnicateMenuEntry);
-            MenuEntries.Add(elfMenuEntry);
-            */
             MenuEntries.Add(board);
             MenuEntries.Add(fullScreen);
             MenuEntries.Add(backMenuEntry);
@@ -124,11 +94,6 @@ namespace GameStateManagement
 
         private static void LoadBoardList()
         {
-            String key = String.Empty;
-            if (loaded)
-            {
-               key = enumerator.Current.Key;
-            }
 
             BoardsPaths = new Dictionary<string, string>(); 
 
@@ -147,13 +112,19 @@ namespace GameStateManagement
 
             }
 
+            String key = String.Empty;
+            if (loaded)
+            {
+                key = enumerator.Current.Key;
+            }
+
             enumerator = BoardsPaths.GetEnumerator();
             enumerator.MoveNext();
 
             if (loaded)
             {
                 bool endReached = false;
-                while ((enumerator.Current.Key != key || endReached) &&  !(enumerator.Current.Key != key && endReached))
+                while ((enumerator.Current.Key != key || endReached) && !(enumerator.Current.Key != key && endReached))
                 {
                     endReached = !enumerator.MoveNext();
                 }
@@ -165,6 +136,7 @@ namespace GameStateManagement
                     enumerator.MoveNext();
                 }
             }
+           
 
             loaded = true;
         }
@@ -177,12 +149,7 @@ namespace GameStateManagement
         {
             board.Text = "Board: " + enumerator.Current.Key;
             fullScreen.Text = "Full screen: " + (isFullScreen ? "on" : "off");
-            /*
-            ungulateMenuEntry.Text = "Preferred ungulate: " + currentUngulate;
-            languageMenuEntry.Text = "Language: " + languages[currentLanguage];
-            frobnicateMenuEntry.Text = "Frobnicate: " + (frobnicate ? "on" : "off");
-            elfMenuEntry.Text = "elf: " + elf;
-             */ 
+
         }
 
 
@@ -190,56 +157,13 @@ namespace GameStateManagement
 
         #region Handle Input
 
-/*
-        /// <summary>
-        /// Event handler for when the Ungulate menu entry is selected.
-        /// </summary>
-        void UngulateMenuEntrySelected(object sender, PlayerIndexEventArgs e)
-        {
-            currentUngulate++;
-
-            if (currentUngulate > Ungulate.Llama)
-                currentUngulate = 0;
-
-            SetMenuEntryText();
-        }
-
-
-        /// <summary>
-        /// Event handler for when the Language menu entry is selected.
-        /// </summary>
-        void LanguageMenuEntrySelected(object sender, PlayerIndexEventArgs e)
-        {
-            currentLanguage = (currentLanguage + 1) % languages.Length;
-
-            SetMenuEntryText();
-        }
-
-
-        /// <summary>
-        /// Event handler for when the Frobnicate menu entry is selected.
-        /// </summary>
-        void FrobnicateMenuEntrySelected(object sender, PlayerIndexEventArgs e)
-        {
-            frobnicate = !frobnicate;
-
-            SetMenuEntryText();
-        }
-
-
-        /// <summary>
-        /// Event handler for when the Elf menu entry is selected.
-        /// </summary>
-        void ElfMenuEntrySelected(object sender, PlayerIndexEventArgs e)
-        {
-            elf++;
-
-            SetMenuEntryText();
-        }
-*/
-
-
         void BoardMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        {
+            MoveEnumerator();
+            SetMenuEntryText();
+        }
+
+        static void MoveEnumerator()
         {
             if (!enumerator.MoveNext())
             {
@@ -247,7 +171,6 @@ namespace GameStateManagement
                 enumerator.MoveNext();
             }
 
-            SetMenuEntryText();
         }
 
         void FullScreenSelected(object sender, PlayerIndexEventArgs e)
@@ -265,7 +188,16 @@ namespace GameStateManagement
             
         }
 
+        internal static void SwitchToNextBoard()
+        {
+            if (!loaded)
+                LoadBoardList();
+            MoveEnumerator();
+
+        }
 
         #endregion
+
+
     }
 }
