@@ -20,9 +20,11 @@ namespace Pacman.GameObjects
             PORTALS,
             MONSTER_HOUSES,
             DOTS,
+            PILLS,
             FRUITS,
             PACMANS,
-            MONSTERS
+            MONSTERS,
+            GHOSTS
         }
         
         #region Fields
@@ -33,7 +35,7 @@ namespace Pacman.GameObjects
         public const int SCALE = 1;
 
         protected GameCoordinates gamePosition;
-        protected Vector2 screenPosition;
+        protected Vector2 screenVectorPosition;
         protected Rectangle source;
         
         //Static fields

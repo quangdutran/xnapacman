@@ -53,7 +53,52 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>D:\Programming\Code\Projects\Games\Pacman\Pacman\Pacman\bin\x86\Debug\Content\sprite.xnb</Output>
-      <Time>2010-06-18T17:52:43.203125+02:00</Time>
+      <Time>2010-06-19T13:32:24.4375+02:00</Time>
+    </Item>
+    <Item>
+      <Source>sprite-jpg.jpg</Source>
+      <Name>sprite-jpg</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Programming\Code\Projects\Games\Pacman\Pacman\Pacman\bin\x86\Debug\Content\sprite-jpg.xnb</Output>
+      <Time>2010-06-19T13:15:48.5+02:00</Time>
+    </Item>
+    <Item>
+      <Source>gamefont2.spritefont</Source>
+      <Name>gamefont2</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Programming\Code\Projects\Games\Pacman\Pacman\Pacman\bin\x86\Debug\Content\gamefont2.xnb</Output>
+      <Time>2010-06-20T16:35:30.234375+02:00</Time>
+    </Item>
+    <Item>
+      <Source>gameFontCourierNew40.spritefont</Source>
+      <Name>gameFontCourierNew40</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Programming\Code\Projects\Games\Pacman\Pacman\Pacman\bin\x86\Debug\Content\gameFontCourierNew40.xnb</Output>
+      <Time>2010-06-20T17:09:02.28125+02:00</Time>
+    </Item>
+    <Item>
+      <Source>gameFontCourierNew20.spritefont</Source>
+      <Name>gameFontCourierNew20</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Programming\Code\Projects\Games\Pacman\Pacman\Pacman\bin\x86\Debug\Content\gameFontCourierNew20.xnb</Output>
+      <Time>2010-06-20T17:08:47.984375+02:00</Time>
+    </Item>
+    <Item>
+      <Source>gameFontCourierNew32.spritefont</Source>
+      <Name>gameFontCourierNew32</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Programming\Code\Projects\Games\Pacman\Pacman\Pacman\bin\x86\Debug\Content\gameFontCourierNew32.xnb</Output>
+      <Time>2010-06-20T17:00:50.109375+02:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

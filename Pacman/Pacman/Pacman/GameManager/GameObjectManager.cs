@@ -13,6 +13,12 @@ namespace Pacman.GameObjects
 {
     class GameObjectManager
     {
+        #region Statics
+
+        static bool levelCompleted = false;
+        static bool GameOver = false;
+
+        #endregion
 
         #region Fields
 
@@ -23,6 +29,7 @@ namespace Pacman.GameObjects
 
         List<GameObject> monsters = new List<GameObject>();
         List<GameObject> dots = new List<GameObject>();
+        List<GameObject> pills = new List<GameObject>();
 
 
         List<GameObject> fruits = new List<GameObject>();
@@ -32,6 +39,7 @@ namespace Pacman.GameObjects
 
         PacmanGameObject pacman;
         MonsterGameObject monsterHouse;
+        ToolBarGameObject toolBarGameObject;
 
         CollisionManager collisionManager;
 
@@ -81,18 +89,21 @@ namespace Pacman.GameObjects
         {
             BoardFactory boardFactory = new BoardFactory();
             board = boardFactory.getBoard();
+            levelCompleted = false;
+            GameOver = false;
+
         }
 
 
         public void LoadContent()
         {
 
-            /*
+            
             monsters.Add(new MonsterGameObject(MonsterGameObject.MonsterGameObjectColor.Blue));
             monsters.Add(new MonsterGameObject(MonsterGameObject.MonsterGameObjectColor.Green));
             monsters.Add(new MonsterGameObject(MonsterGameObject.MonsterGameObjectColor.Pink));
             monsters.Add(new MonsterGameObject(MonsterGameObject.MonsterGameObjectColor.Red));
-            */
+            
 
             Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
 
@@ -120,8 +131,12 @@ namespace Pacman.GameObjects
 
             dots = DotGameObject.Generate(bottomRightArena.X, bottomRightArena.Y);
 
-            listOfAllGameObjects.Add(monsters);
+           
             listOfAllGameObjects.Add(dots);
+
+            pills = MagicPillGameObject.Generate();
+
+            listOfAllGameObjects.Add(pills);
             listOfAllGameObjects.Add(walls);
             listOfAllGameObjects.Add(portals);
             listOfAllGameObjects.Add(fruits);
@@ -129,9 +144,10 @@ namespace Pacman.GameObjects
             pacman = new PacmanGameObject();
             pacmans.Add(pacman);
             listOfAllGameObjects.Add(pacmans);
+            listOfAllGameObjects.Add(monsters);
 
             List<GameObject> other = new List<GameObject>();
-            other.Add(new ToolBarGameObject());
+            other.Add(toolBarGameObject = new ToolBarGameObject());
             listOfAllGameObjects.Add(other);
 
             /*
@@ -142,7 +158,7 @@ namespace Pacman.GameObjects
 
             collisionManager = CollisionManager.getInstance();
             collisionManager.Initialize(walls, portals, monsterHouses,
-                                        dots, fruits,
+                                        dots, pills, fruits,
                                         pacmans, monsters);
 
 
@@ -175,6 +191,20 @@ namespace Pacman.GameObjects
 
         #endregion
 
+        #region GameManagement
+
+        internal bool isLevelCompleted()
+        {
+            return levelCompleted;
+        }
+
+        internal bool isGameOver()
+        {
+            return GameOver;
+        }
+
+        #endregion
+
         #region Update and Draw
 
         public void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
@@ -183,7 +213,16 @@ namespace Pacman.GameObjects
                 foreach (GameObject gameObject in list)
                 {
                     gameObject.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
-                }              
+                }
+
+            foreach (PacmanGameObject pm in pacmans)
+            {
+                if (pm.IsDead)
+                    GameOver = true;
+            }
+
+            if (DotGameObject.VisibleDotCounter == 0)
+                levelCompleted = true;
         }
 
         public void Draw(GameTime gameTime)
@@ -199,13 +238,24 @@ namespace Pacman.GameObjects
 
         #endregion
 
+        #region Handle Input
 
         internal void HandleInput(KeyboardState keyboardState)
         {
-            foreach (GameObject pacman in pacmans)
+            foreach (List<GameObject> list in listOfAllGameObjects)
             {
-                pacman.HandleInput(keyboardState);
-            }       
+                foreach (GameObject gameObject in list)
+                {
+                    if(gameObject is MoveableGameObject)
+                    {
+                        gameObject.HandleInput(keyboardState);
+                    }
+                }
+            }
+
         }
+
+        #endregion 
+
     }
 }

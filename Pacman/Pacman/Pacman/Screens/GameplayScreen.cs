@@ -15,6 +15,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Pacman.GameObjects;
+using System.Collections.Generic;
 #endregion
 
 namespace GameStateManagement
@@ -39,13 +40,14 @@ namespace GameStateManagement
 
         Vector2 playerPosition = new Vector2(100, 100);
         Vector2 enemyPosition = new Vector2(100, 100);
+        List<int> code = new List<int>();
 
         Random random = new Random();
 
         GameObjectManager gameObjectManager;
 
         //TODO: check is it nececcary
-        static GameplayScreen instance = null;
+//        static GameplayScreen instance = null;
 
         #endregion
 
@@ -58,22 +60,22 @@ namespace GameStateManagement
         #region Initialization
 
 
-        public static GameplayScreen GetInstance()
+     /*   public static GameplayScreen GetInstance()
         {
             if (instance == null)
                 instance = new GameplayScreen();
             return instance;
         }
+      */ 
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        private GameplayScreen()
+        public GameplayScreen()
         {
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
-
-            
+            code.Add(0); //any value is ok.
         }
 
 
@@ -190,7 +192,15 @@ namespace GameStateManagement
             bool gamePadDisconnected = !gamePadState.IsConnected &&
                                        input.GamePadWasConnected[playerIndex];
 
-            if (input.IsPauseGame(ControllingPlayer) || gamePadDisconnected)
+            if (gameObjectManager.isLevelCompleted())
+            {
+                ScreenManager.AddScreen(new LevelCompleteScreen(), ControllingPlayer);
+            }
+            else if(gameObjectManager.isGameOver())
+            {
+                ScreenManager.AddScreen(new GameOverScreen(), ControllingPlayer);
+            }
+            else if (input.IsPauseGame(ControllingPlayer) || gamePadDisconnected)
             {
                 ScreenManager.AddScreen(new PauseMenuScreen(), ControllingPlayer);
             }
@@ -222,6 +232,110 @@ namespace GameStateManagement
                     movement.Y++;
                     lastMove = 2;
                 }
+
+                #region codes
+
+                if (keyboardState.IsKeyDown(Keys.D0))
+                {
+                    if (code.Count == 4)
+                        code.RemoveAt(0);
+                    if(code[code.Count-1] != 0)
+                        code.Add(0);
+                }
+
+                if (keyboardState.IsKeyDown(Keys.D1))
+                {
+                    if (code.Count == 4)
+                        code.RemoveAt(0);
+                    if (code[code.Count - 1] != 1)
+                        code.Add(1);
+                }
+
+                if (keyboardState.IsKeyDown(Keys.D2))
+                {
+                    if (code.Count == 4)
+                        code.RemoveAt(0);
+                    if (code[code.Count - 1] != 2)
+                        code.Add(2);
+                }
+
+                if (keyboardState.IsKeyDown(Keys.D3))
+                {
+                    if (code.Count == 4)
+                        code.RemoveAt(0);
+                    if (code[code.Count - 1] != 3)
+                        code.Add(3);
+                }
+
+                if (keyboardState.IsKeyDown(Keys.D4))
+                {
+                    if (code.Count == 4)
+                        code.RemoveAt(0);
+                    if (code[code.Count - 1] != 4)
+                        code.Add(4);
+                }
+
+                if (keyboardState.IsKeyDown(Keys.D5))
+                {
+                    if (code.Count == 4)
+                        code.RemoveAt(0);
+                    if (code[code.Count - 1] != 5)
+                        code.Add(5);
+                }
+
+                if (keyboardState.IsKeyDown(Keys.D6))
+                {
+                    if (code.Count == 4)
+                        code.RemoveAt(0);
+                    if (code[code.Count - 1] != 6)
+                        code.Add(6);
+                }
+
+                if (keyboardState.IsKeyDown(Keys.D7))
+                {
+                    if (code.Count == 4)
+                        code.RemoveAt(0);
+                    if (code[code.Count - 1] != 7)
+                        code.Add(7);
+                }
+
+                if (keyboardState.IsKeyDown(Keys.D8))
+                {
+                    if (code.Count == 4)
+                        code.RemoveAt(0);
+                    if (code[code.Count - 1] != 8)
+                        code.Add(8);
+                }
+
+                if (keyboardState.IsKeyDown(Keys.D9))
+                {
+                    if (code.Count == 4)
+                        code.RemoveAt(0);
+                    if (code[code.Count - 1] != 9)
+                    code.Add(9);
+                }
+
+                string strCode = string.Empty;
+
+                foreach(int i in code)
+                    strCode += i.ToString();
+
+                switch (strCode)
+                { 
+                    case "4242":
+                        ScreenManager.AddScreen(new LevelCompleteScreen(), ControllingPlayer);
+                        break;
+                    case "1290":
+                        ScreenManager.AddScreen(new GameOverScreen(), ControllingPlayer);
+                        break;
+
+                    case "1212":
+                        MonsterGameObject.Ghost = true;
+                        break;
+
+                }
+
+                #endregion 
 
                 Vector2 thumbstick = gamePadState.ThumbSticks.Left;
 

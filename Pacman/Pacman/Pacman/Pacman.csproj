@@ -93,8 +93,10 @@
     <Compile Include="GameObjects\FruitGameObject.cs" />
     <Compile Include="GameObjects\GameObject.cs" />
     <Compile Include="GameManager\GameObjectManager.cs" />
+    <Compile Include="GameObjects\MagicPillGameObject.cs" />
     <Compile Include="GameObjects\MonsterGameObject.cs" />
     <Compile Include="GameObjects\MonsterHouseGameObject.cs" />
+    <Compile Include="GameObjects\MoveableGameObject.cs" />
     <Compile Include="GameObjects\PacmanGameObject.cs" />
     <Compile Include="GameObjects\PortalGameObject.cs" />
     <Compile Include="GameObjects\ToolBarGameObject.cs" />
@@ -106,7 +108,9 @@
     <Compile Include="ScreenManager\InputState.cs" />
     <Compile Include="ScreenManager\ScreenManager.cs" />
     <Compile Include="Screens\BackgroundScreen.cs" />
+    <Compile Include="Screens\GameOverScreen.cs" />
     <Compile Include="Screens\GameplayScreen.cs" />
+    <Compile Include="Screens\LevelCompleteScreen.cs" />
     <Compile Include="Screens\LoadingScreen.cs" />
     <Compile Include="Screens\MainMenuScreen.cs" />
     <Compile Include="Screens\MenuEntry.cs" />

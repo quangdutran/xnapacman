@@ -192,7 +192,7 @@ namespace GameStateManagement
             }
 
             // Draw the menu title.
-            Vector2 titlePosition = new Vector2(426, 80);
+            Vector2 titlePosition = new Vector2(640/2, 80);
             Vector2 titleOrigin = font.MeasureString(menuTitle) / 2;
             Color titleColor = new Color(192, 192, 192, TransitionAlpha);
             float titleScale = 1.25f;
@@ -201,6 +201,7 @@ namespace GameStateManagement
 
             spriteBatch.DrawString(font, menuTitle, titlePosition, titleColor, 0,
                                    titleOrigin, titleScale, SpriteEffects.None, 0);
+
 
             spriteBatch.End();
         }
