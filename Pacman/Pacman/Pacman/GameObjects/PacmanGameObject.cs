@@ -86,6 +86,7 @@ namespace Pacman.GameObjects
             if(CollisionManager.getInstance().IsCollision(ScreenRectanglePosition,movementDirection,GameObjectType.MONSTERS))
             {
                 IsDead = true;
+                SoundManager.PlayPacmanDeadSound();
             }
 
             if (CollisionManager.getInstance().IsCollision(ScreenRectanglePosition, movementDirection, GameObjectType.GHOSTS))

@@ -16,6 +16,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Pacman.GameObjects;
 using System.Collections.Generic;
+using Pacman.GameManager;
 #endregion
 
 namespace GameStateManagement
@@ -86,19 +87,17 @@ namespace GameStateManagement
         {
             if (content == null)
             {
-                content = new ContentManager(ScreenManager.Game.Services, "Content");
+                content = GameStateManagementGame.content;
                 
             }
             gameObjectManager = new GameObjectManager();
             gameObjectManager.ScreenManager = ScreenManager;
-
 
             //TODO: remove redundant code
             gameObjectManager.ContentManager = content;
             gameObjectManager.SpriteBatch = ScreenManager.SpriteBatch;
 
             gameObjectManager.LoadContent();
-
 
             gameFont = content.Load<SpriteFont>("gamefont");
 

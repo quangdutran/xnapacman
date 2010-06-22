@@ -11,6 +11,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using Microsoft.Xna.Framework.Content;
+using Pacman.GameManager;
 #endregion
 
 namespace GameStateManagement
@@ -30,6 +32,12 @@ namespace GameStateManagement
 
         private static GameStateManagementGame instance = null;
 
+        static ContentManager contentManager;
+
+        public static ContentManager content
+        {
+            get { return GameStateManagementGame.contentManager; }
+        }
 
         public static bool FullScreen
         {
@@ -73,6 +81,9 @@ namespace GameStateManagement
 
             // Create the screen manager component.
             screenManager = new ScreenManager(this);
+            
+            contentManager = new ContentManager(screenManager.Game.Services, "Content");
+
 
             Components.Add(screenManager);
 

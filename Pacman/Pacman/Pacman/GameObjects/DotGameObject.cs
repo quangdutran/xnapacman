@@ -106,6 +106,7 @@ namespace Pacman.GameObjects
             {
                 visible = false;
                 visibleDotCounter--;
+                SoundManager.PlayDotSound();
             }
         }
 

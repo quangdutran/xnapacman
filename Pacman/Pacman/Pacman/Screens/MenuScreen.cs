@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Pacman.GameManager;
 #endregion
 
 namespace GameStateManagement
@@ -112,6 +113,7 @@ namespace GameStateManagement
         /// </summary>
         protected virtual void OnSelectEntry(int entryIndex, PlayerIndex playerIndex)
         {
+            SoundManager.PlayClickSound();
             menuEntries[selectedEntry].OnSelectEntry(playerIndex);
         }
 
