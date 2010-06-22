@@ -185,40 +185,42 @@ namespace Pacman.GameManager
         private bool IsPacmanMakeCollisionWithDots(Rectangle pacmanRect, PacmanGameObject.direction direction)
         {
 
-            GameCoordinates pacEnvironmet = GameCoordinates.ScreenPositionToGameCoortinates(new Vector2(pacmanRect.X, pacmanRect.Y));
-
-            List<DotGameObject> dotsToCheck = new List<DotGameObject>();
-
-            dotsToCheck.Add(DotGameObject.array[pacEnvironmet.X, pacEnvironmet.Y]);
-
-            if(pacEnvironmet.X < 24-1 /*BoardSize*/)
-                dotsToCheck.Add(DotGameObject.array[pacEnvironmet.X + 1, pacEnvironmet.Y]);
-
-            if (pacEnvironmet.Y < 18 - 1)
-                dotsToCheck.Add(DotGameObject.array[pacEnvironmet.X, pacEnvironmet.Y + 1]);
-
-            if (pacEnvironmet.X < 24-1 /*BoardSize*/ && pacEnvironmet.Y < 18-1)
-                dotsToCheck.Add(DotGameObject.array[pacEnvironmet.X + 1, pacEnvironmet.Y + 1]);
-
-            int radius = 3;
-
-            Rectangle pacmanMiniRect = new Rectangle(pacmanRect.X + (GameObject.OBJECT_SIZE/2)-radius,
-                                                     pacmanRect.Y + (GameObject.OBJECT_SIZE/2)-radius,
-                                                     2*radius,
-                                                     2*radius);
-
-            foreach (DotGameObject dot in dotsToCheck)
+            if (DotGameObject.VisibleDotCounter > 0)
             {
-                if (pacmanMiniRect.Intersects(dot.ScreenRectangle))
-                {
+                GameCoordinates pacEnvironmet = GameCoordinates.ScreenPositionToGameCoortinates(new Vector2(pacmanRect.X, pacmanRect.Y));
 
-                    dot.Clear();
-                    return true;
+                List<DotGameObject> dotsToCheck = new List<DotGameObject>();
+
+                dotsToCheck.Add(DotGameObject.array[pacEnvironmet.X, pacEnvironmet.Y]);
+
+                if (pacEnvironmet.X < 24 - 1 /*BoardSize*/)
+                    dotsToCheck.Add(DotGameObject.array[pacEnvironmet.X + 1, pacEnvironmet.Y]);
+
+                if (pacEnvironmet.Y < 18 - 1)
+                    dotsToCheck.Add(DotGameObject.array[pacEnvironmet.X, pacEnvironmet.Y + 1]);
+
+                if (pacEnvironmet.X < 24 - 1 /*BoardSize*/ && pacEnvironmet.Y < 18 - 1)
+                    dotsToCheck.Add(DotGameObject.array[pacEnvironmet.X + 1, pacEnvironmet.Y + 1]);
+
+                int radius = 3;
+
+                Rectangle pacmanMiniRect = new Rectangle(pacmanRect.X + (GameObject.OBJECT_SIZE / 2) - radius,
+                                                         pacmanRect.Y + (GameObject.OBJECT_SIZE / 2) - radius,
+                                                         2 * radius,
+                                                         2 * radius);
+
+                foreach (DotGameObject dot in dotsToCheck)
+                {
+                    if (pacmanMiniRect.Intersects(dot.ScreenRectangle))
+                    {
+
+                        dot.Clear();
+                        return true;
+                    }
+
                 }
 
             }
-
-
             return false;
         }
 

@@ -46,6 +46,13 @@ namespace Pacman.GameObjects
 
         #region Initialization
 
+        public PacmanGameObject(int x, int y)
+        {
+            IsDead = false;
+            screenVectorPosition = (new GameCoordinates(x, y)).GetScreenPosition();
+        }
+
+
         public PacmanGameObject()
         {
             IsDead = false;

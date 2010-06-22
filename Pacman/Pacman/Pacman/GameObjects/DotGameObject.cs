@@ -83,6 +83,11 @@ namespace Pacman.GameObjects
             this.source = new Rectangle(17 * OBJECT_SIZE+9, 4 * OBJECT_SIZE+9, 6, 6);
         }
 
+        public override void UnloadContent()
+        {
+            visibleDotCounter = 0;
+        }
+
         #region Draw
 
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)

@@ -13,6 +13,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Pacman.GameManager;
+using Pacman.GameObjects;
 #endregion
 
 namespace GameStateManagement
@@ -28,7 +29,8 @@ namespace GameStateManagement
 
         ContentManager content;
         Texture2D backgroundTexture;
-
+        GameObjectManager gameObjectManager;
+        bool demo = true;
         #endregion
 
         #region Initialization
@@ -63,6 +65,19 @@ namespace GameStateManagement
             SoundManager.contentManager = content;
             SoundManager.LoadContent();
             SoundManager.PlayMainMenuSound();
+
+            if (demo)
+            {
+                gameObjectManager = new GameObjectManager(GameObjectManager.Mode.Demo);
+                gameObjectManager.ScreenManager = ScreenManager;
+
+                //TODO: remove redundant code
+                gameObjectManager.ContentManager = content;
+                gameObjectManager.SpriteBatch = ScreenManager.SpriteBatch;
+
+                gameObjectManager.LoadContent();
+            }
+
         }
 
 
@@ -94,6 +109,7 @@ namespace GameStateManagement
                                                        bool coveredByOtherScreen)
         {
             base.Update(gameTime, otherScreenHasFocus, false);
+            if(demo) gameObjectManager.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
         }
 
 
@@ -107,10 +123,13 @@ namespace GameStateManagement
             Rectangle fullscreen = new Rectangle(0, 0, viewport.Width, viewport.Height);
             byte fade = TransitionAlpha;
 
-            spriteBatch.Begin(SpriteBlendMode.None);
+            spriteBatch.Begin();//SpriteBlendMode.None);
 
             spriteBatch.Draw(backgroundTexture, fullscreen,
                              new Color(fade, fade, fade));
+
+            if(demo) gameObjectManager.Draw(gameTime);
+
 
             spriteBatch.End();
         }
