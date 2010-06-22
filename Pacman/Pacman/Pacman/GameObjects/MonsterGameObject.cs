@@ -70,10 +70,10 @@ namespace Pacman.GameObjects
 
         public enum MonsterGameObjectColor
         { 
-          Blue,
-          Green,
-          Pink,
-          Red
+          Blue =0 ,
+          Green =1,
+          Pink = 2,
+          Red =3
         }
 
 
@@ -85,6 +85,17 @@ namespace Pacman.GameObjects
         #endregion
 
         #region Initialization
+
+        public MonsterGameObject(int x, int y, MonsterGameObjectColor color)
+        {
+            monsterColor = color;
+            //TODO: remove magic numbers
+            screenVectorPosition = (new GameCoordinates(x, y)).GetScreenPosition();
+
+            startLastMovePosition = GameVectorPosition;
+            Ghost = false;
+        }
+
 
         public MonsterGameObject(MonsterGameObjectColor color)
         {

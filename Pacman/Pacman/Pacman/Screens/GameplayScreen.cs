@@ -90,7 +90,7 @@ namespace GameStateManagement
                 content = GameStateManagementGame.content;
                 
             }
-            gameObjectManager = new GameObjectManager();
+            gameObjectManager = new GameObjectManager(GameObjectManager.Mode.Normal);
             gameObjectManager.ScreenManager = ScreenManager;
 
             //TODO: remove redundant code

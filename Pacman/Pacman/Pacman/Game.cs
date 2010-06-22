@@ -85,6 +85,10 @@ namespace GameStateManagement
             contentManager = new ContentManager(screenManager.Game.Services, "Content");
 
 
+
+            SoundManager.contentManager = content;
+            SoundManager.LoadContent();
+
             Components.Add(screenManager);
 
             // Activate the first screens.

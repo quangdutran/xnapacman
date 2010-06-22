@@ -13,17 +13,27 @@ namespace Pacman.GameObjects
 {
     class GameObjectManager
     {
-        #region Statics
+        #region Statics and enums
 
         static bool levelCompleted = false;
         static bool GameOver = false;
+
+        int updateDelta =0;
+
+        Mode mode;
+
+        public enum Mode
+        {
+            Demo,
+            Normal
+        }
 
         #endregion
 
         #region Fields
 
 
-        List<GameObject> walls;
+        List<GameObject> walls = new List<GameObject>();
         List<GameObject> portals = new List<GameObject>();
         List<GameObject> monsterHouses = new List<GameObject>();
 
@@ -85,8 +95,9 @@ namespace Pacman.GameObjects
 
         #region Initialization
 
-        public GameObjectManager()
+        public GameObjectManager(Mode m)
         {
+            mode = m;
             BoardFactory boardFactory = new BoardFactory();
             board = boardFactory.getBoard();
             levelCompleted = false;
@@ -97,82 +108,95 @@ namespace Pacman.GameObjects
 
         public void LoadContent()
         {
-
-            
-            monsters.Add(new MonsterGameObject(MonsterGameObject.MonsterGameObjectColor.Blue));
-            monsters.Add(new MonsterGameObject(MonsterGameObject.MonsterGameObjectColor.Green));
-            monsters.Add(new MonsterGameObject(MonsterGameObject.MonsterGameObjectColor.Pink));
-            monsters.Add(new MonsterGameObject(MonsterGameObject.MonsterGameObjectColor.Red));
-            
-
-            Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
-
-            GameCoordinates topLeftArena = new GameCoordinates(0, 0);
-            GameCoordinates bottomRightArena = new GameCoordinates();
-            
-            //TODO:remove magic number
-            bottomRightArena.X = viewport.Width / 24 -2;
-            bottomRightArena.Y = viewport.Height / 24 -2;
-
-            walls = board.Walls;
-
-            //borders
-            if (
-                //false
-                true
-                )
+            if (mode == Mode.Demo)
             {
-                walls.Add(new HorizontalWallGameObject(topLeftArena.Y, topLeftArena.X, bottomRightArena.X));
-                walls.Add(new HorizontalWallGameObject(bottomRightArena.Y, topLeftArena.X, bottomRightArena.X));
+                pacmans.Add(new PacmanGameObject(-1, 0));
 
-                walls.Add(new VerticalWallGameObject(topLeftArena.X, topLeftArena.Y, bottomRightArena.Y));
-                walls.Add(new VerticalWallGameObject(bottomRightArena.X, topLeftArena.Y, bottomRightArena.Y));
+                monsters.Add(new MonsterGameObject(-3, 0, MonsterGameObject.MonsterGameObjectColor.Blue));
+                monsters.Add(new MonsterGameObject(-4, 0, MonsterGameObject.MonsterGameObjectColor.Pink));
+                monsters.Add(new MonsterGameObject(-5, 0, MonsterGameObject.MonsterGameObjectColor.Green));
+                monsters.Add(new MonsterGameObject(-6, 0, MonsterGameObject.MonsterGameObjectColor.Red));
+
+                listOfAllGameObjects.Add(pacmans);
+                listOfAllGameObjects.Add(monsters);    
+
+            }
+            else if (mode == Mode.Normal)
+            {
+
+                monsters.Add(new MonsterGameObject(MonsterGameObject.MonsterGameObjectColor.Blue));
+                monsters.Add(new MonsterGameObject(MonsterGameObject.MonsterGameObjectColor.Green));
+                monsters.Add(new MonsterGameObject(MonsterGameObject.MonsterGameObjectColor.Pink));
+                monsters.Add(new MonsterGameObject(MonsterGameObject.MonsterGameObjectColor.Red));
+
+
+                Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
+
+                GameCoordinates topLeftArena = new GameCoordinates(0, 0);
+                GameCoordinates bottomRightArena = new GameCoordinates();
+
+                //TODO:remove magic number
+                bottomRightArena.X = viewport.Width / 24 - 2;
+                bottomRightArena.Y = viewport.Height / 24 - 2;
+
+                walls = board.Walls;
+
+                //borders
+                if (
+                    //false
+                    true
+                    )
+                {
+                    walls.Add(new HorizontalWallGameObject(topLeftArena.Y, topLeftArena.X, bottomRightArena.X));
+                    walls.Add(new HorizontalWallGameObject(bottomRightArena.Y, topLeftArena.X, bottomRightArena.X));
+
+                    walls.Add(new VerticalWallGameObject(topLeftArena.X, topLeftArena.Y, bottomRightArena.Y));
+                    walls.Add(new VerticalWallGameObject(bottomRightArena.X, topLeftArena.Y, bottomRightArena.Y));
+                }
+
+                dots = DotGameObject.Generate(bottomRightArena.X, bottomRightArena.Y);
+
+
+                listOfAllGameObjects.Add(dots);
+
+                pills = MagicPillGameObject.Generate();
+
+                listOfAllGameObjects.Add(pills);
+                listOfAllGameObjects.Add(walls);
+                listOfAllGameObjects.Add(portals);
+                listOfAllGameObjects.Add(fruits);
+
+                pacman = new PacmanGameObject();
+                pacmans.Add(pacman);
+                listOfAllGameObjects.Add(pacmans);
+                listOfAllGameObjects.Add(monsters);
+
+                List<GameObject> other = new List<GameObject>();
+                other.Add(toolBarGameObject = new ToolBarGameObject());
+                listOfAllGameObjects.Add(other);
+
+                /*
+                List<GameObject> monsterHouses = new List<GameObject>();
+                monsterHouses.Add(monsterHouse);
+                listOfAllGameObjects.Add(monsterHouses);
+                */
+
             }
 
-            dots = DotGameObject.Generate(bottomRightArena.X, bottomRightArena.Y);
-
-           
-            listOfAllGameObjects.Add(dots);
-
-            pills = MagicPillGameObject.Generate();
-
-            listOfAllGameObjects.Add(pills);
-            listOfAllGameObjects.Add(walls);
-            listOfAllGameObjects.Add(portals);
-            listOfAllGameObjects.Add(fruits);
-
-            pacman = new PacmanGameObject();
-            pacmans.Add(pacman);
-            listOfAllGameObjects.Add(pacmans);
-            listOfAllGameObjects.Add(monsters);
-
-            List<GameObject> other = new List<GameObject>();
-            other.Add(toolBarGameObject = new ToolBarGameObject());
-            listOfAllGameObjects.Add(other);
-
-            /*
-            List<GameObject> monsterHouses = new List<GameObject>();
-            monsterHouses.Add(monsterHouse);
-            listOfAllGameObjects.Add(monsterHouses);
-            */
-
+            
             collisionManager = CollisionManager.getInstance();
             collisionManager.Initialize(walls, portals, monsterHouses,
                                         dots, pills, fruits,
                                         pacmans, monsters);
 
 
-
-
             GameObject.LoadStaticContent();
 
-            foreach(List<GameObject> list in listOfAllGameObjects)
+            foreach (List<GameObject> list in listOfAllGameObjects)
                 foreach (GameObject gameObject in list)
                 {
                     gameObject.LoadContent();
                 }
-
-
 
         }
 
@@ -209,6 +233,42 @@ namespace Pacman.GameObjects
 
         public void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
+            updateDelta += gameTime.ElapsedGameTime.Milliseconds;
+
+            if (mode == Mode.Demo && updateDelta > 10000)
+            {
+                int y = (new Random()).Next(16);
+                updateDelta = 0;
+                pacmans.Clear();
+                monsters.Clear();
+
+                pacmans.Add(new PacmanGameObject(-1, y));
+
+                monsters.Add(new MonsterGameObject(-3, y, MonsterGameObject.MonsterGameObjectColor.Blue));
+                monsters.Add(new MonsterGameObject(-4, y, MonsterGameObject.MonsterGameObjectColor.Pink));
+                monsters.Add(new MonsterGameObject(-5, y, MonsterGameObject.MonsterGameObjectColor.Green));
+                monsters.Add(new MonsterGameObject(-6, y, MonsterGameObject.MonsterGameObjectColor.Red));
+
+                listOfAllGameObjects.Clear();
+
+                listOfAllGameObjects.Add(pacmans);
+                listOfAllGameObjects.Add(monsters);
+
+                collisionManager = CollisionManager.getInstance();
+                collisionManager.Initialize(walls, portals, monsterHouses,
+                                            dots, pills, fruits,
+                                            pacmans, monsters);
+
+
+                GameObject.LoadStaticContent();
+
+                foreach (List<GameObject> list in listOfAllGameObjects)
+                    foreach (GameObject gameObject in list)
+                    {
+                        gameObject.LoadContent();
+                    }
+            }
+
             foreach (List<GameObject> list in listOfAllGameObjects)
                 foreach (GameObject gameObject in list)
                 {

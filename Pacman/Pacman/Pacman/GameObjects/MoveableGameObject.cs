@@ -60,6 +60,8 @@ namespace Pacman.GameObjects
 
         #region Update
 
+        
+
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
 
