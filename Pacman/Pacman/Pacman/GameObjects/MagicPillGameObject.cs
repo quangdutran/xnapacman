@@ -96,6 +96,7 @@ namespace Pacman.GameObjects
             if (visible)
             {
                 visible = false;
+                SoundManager.PlayPillSound();
             }
         }
 

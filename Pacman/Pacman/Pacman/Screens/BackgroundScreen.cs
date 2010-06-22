@@ -12,6 +12,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Pacman.GameManager;
 #endregion
 
 namespace GameStateManagement
@@ -40,6 +41,8 @@ namespace GameStateManagement
         {
             TransitionOnTime = TimeSpan.FromSeconds(0.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
+
+            
         }
 
 
@@ -56,6 +59,10 @@ namespace GameStateManagement
                 content = new ContentManager(ScreenManager.Game.Services, "Content");
 
             backgroundTexture = content.Load<Texture2D>("background");
+            
+            SoundManager.contentManager = content;
+            SoundManager.LoadContent();
+            SoundManager.PlayMainMenuSound();
         }
 
 
@@ -64,7 +71,10 @@ namespace GameStateManagement
         /// </summary>
         public override void UnloadContent()
         {
-            content.Unload();
+            SoundManager.PauseMainMenuSound();
+
+            //SoundManager.UnloadContent();
+            //content.Unload();
         }
 
 

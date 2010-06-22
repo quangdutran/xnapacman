@@ -13,6 +13,7 @@ using System.IO;
 using System.Collections.Generic;
 using System;
 using System.Xml;
+using Pacman.GameManager;
 #endregion
 
 namespace GameStateManagement
@@ -25,21 +26,17 @@ namespace GameStateManagement
     class OptionsMenuScreen : MenuScreen
     {
         #region Fields
-        /*
-        MenuEntry ungulateMenuEntry;
-        MenuEntry languageMenuEntry;
-        MenuEntry frobnicateMenuEntry;
-        MenuEntry elfMenuEntry;
-        */
 
         MenuEntry board;
         MenuEntry fullScreen;
+        MenuEntry soundsVolume;
 
-        enum Ungulate
+        static int soundLevel = 2;
+
+        public static float SoundLevel
         {
-            BactrianCamel,
-            Dromedary,
-            Llama,
+            get { return OptionsMenuScreen.soundLevel/10.0f; }
+            
         }
 
         static Dictionary<String, String>.Enumerator enumerator;
@@ -75,6 +72,7 @@ namespace GameStateManagement
 
             board = new MenuEntry(string.Empty);
             fullScreen = new MenuEntry(string.Empty);
+            soundsVolume = new MenuEntry(string.Empty);
 
             SetMenuEntryText();
 
@@ -84,11 +82,14 @@ namespace GameStateManagement
 
             board.Selected += BoardMenuEntrySelected;
             fullScreen.Selected += FullScreenSelected;
+            soundsVolume.Selected += soundsVolumeSelected;
+
             backMenuEntry.Selected += OnSave;
             
             // Add entries to the menu.
             MenuEntries.Add(board);
             MenuEntries.Add(fullScreen);
+            MenuEntries.Add(soundsVolume);
             MenuEntries.Add(backMenuEntry);
         }
 
@@ -147,8 +148,10 @@ namespace GameStateManagement
         /// </summary>
         void SetMenuEntryText()
         {
-            board.Text = "Board: " + enumerator.Current.Key;
-            fullScreen.Text = "Full screen: " + (isFullScreen ? "on" : "off");
+            board.Text          = "Board:               " + enumerator.Current.Key;
+            fullScreen.Text     = "Full screen:          " + (isFullScreen ? "on" : "off");
+            soundsVolume.Text   = "Sound:               " + ((soundLevel==0)?"off":(soundLevel.ToString()+"0%"));
+            
 
         }
 
@@ -178,6 +181,14 @@ namespace GameStateManagement
             isFullScreen = !isFullScreen;
             SetMenuEntryText();
         }
+
+        void soundsVolumeSelected(object sender, PlayerIndexEventArgs e)
+        {
+            soundLevel = (soundLevel+1) % 11;
+            SoundManager.UrgentUpdateVolume();
+            SetMenuEntryText();
+        }
+
 
         void OnSave(object sender, PlayerIndexEventArgs e)
         {
